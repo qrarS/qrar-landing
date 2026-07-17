@@ -1,4 +1,4 @@
-import LegalPage, { LegalSection } from "@/components/LegalPage";
+import LegalPage, { type LegalSection } from "@/components/site/SiteLegalPage";
 
 const EFFECTIVE_DATE = "April 27, 2026";
 

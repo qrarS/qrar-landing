@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face{font-family:'Salma Arabic';src:url('/src/assets/fonts/SalmaArabic-Light.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:'Salma Arabic';src:url('/src/assets/fonts/SalmaArabic-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'Salma Arabic';src:url('/src/assets/fonts/SalmaArabic-Medium.otf') format('opentype');font-weight:500;font-display:swap}
+@font-face{font-family:'Salma Arabic';src:url('/src/assets/fonts/SalmaArabic-Bold.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:'Salma Arabic';src:url('/src/assets/fonts/SalmaArabic-Black.otf') format('opentype');font-weight:900;font-display:swap}
+
+@layer base{
+  :root{--background:280 43% 99%;--foreground:270 45% 14%;--card:0 0% 100%;--card-foreground:270 45% 14%;--popover:0 0% 100%;--popover-foreground:270 45% 14%;--primary:270 45% 14%;--primary-foreground:0 0% 100%;--secondary:280 55% 96%;--secondary-foreground:270 45% 14%;--muted:280 30% 95%;--muted-foreground:270 12% 42%;--accent:278 82% 62%;--accent-foreground:0 0% 100%;--accent-soft:280 82% 78%;--destructive:0 84% 60%;--destructive-foreground:0 0% 100%;--border:274 24% 88%;--input:274 24% 88%;--ring:278 82% 62%;--radius:1rem;--sidebar-background:280 43% 99%;--sidebar-foreground:270 45% 14%;--sidebar-primary:278 82% 62%;--sidebar-primary-foreground:0 0% 100%;--sidebar-accent:280 55% 96%;--sidebar-accent-foreground:270 45% 14%;--sidebar-border:274 24% 88%;--sidebar-ring:278 82% 62%}
+  *{@apply border-border}html{scroll-behavior:smooth;background:#fbf8fd}body{@apply m-0 bg-background text-foreground antialiased;min-width:320px;font-family:'Salma Arabic',ui-sans-serif,system-ui,sans-serif;font-feature-settings:'ss01','cv11'}button,input,textarea,select{font:inherit}::selection{background:rgba(174,80,237,.25);color:#201331}:focus-visible{outline:3px solid rgba(174,80,237,.4);outline-offset:3px}
+}
+@layer components{
+  .site-container{@apply mx-auto w-full max-w-[1320px] px-5 sm:px-7 lg:px-10}.section-space{@apply py-20 sm:py-24 lg:py-32}.section-eyebrow{@apply inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-fuchsia-50 px-4 py-2 text-xs font-bold tracking-wide text-fuchsia-700}.section-title{@apply text-balance text-3xl font-black leading-tight tracking-[-.025em] text-violet-950 sm:text-5xl}.section-copy{@apply text-pretty text-base leading-8 text-violet-950/55 sm:text-lg}.brand-button{@apply inline-flex items-center justify-center gap-2 rounded-full bg-[#ae50ed] font-bold text-white shadow-[0_14px_35px_-16px_rgba(174,80,237,.9)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#9a40d6]}.secondary-button{@apply inline-flex items-center justify-center gap-2 rounded-full border border-violet-950/10 bg-white font-bold text-violet-950 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-fuchsia-300 hover:bg-fuchsia-50}.hero-grid{background-image:linear-gradient(rgba(74,41,96,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(74,41,96,.045) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+}
+@layer utilities{.text-balance{text-wrap:balance}.text-pretty{text-wrap:pretty}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
