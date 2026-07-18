@@ -326,7 +326,7 @@
   .console-showcase-card--place {
     position: relative;
     width: 78%;
-    margin: 150px 14% 80px 8%;
+    margin: 260px 14% 140px 8%;
     z-index: 1;
     animation: showcase-float-b 8.5s ease-in-out -3.4s infinite alternate;
   }
