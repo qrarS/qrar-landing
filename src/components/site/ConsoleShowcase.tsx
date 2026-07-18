@@ -21,13 +21,13 @@ const STR = {
   legendNegative: { ar: 'سلبي (4)', en: 'Negative (4)' },
   stop: { ar: 'ايقاف التحليل', en: 'Stop analysis' },
   analyzing: { ar: 'جاري التحليل', en: 'Analyzing' },
-  progressSub: { ar: 'تحليل 1,200 من أصل 12,987', en: 'Analyzing 1,200 of 12,987' },
-  remaining: { ar: 'متبقي 670 تقييم', en: '670 reviews remaining' },
+  progressSub: { ar: 'تحليل 8,540 من أصل 12,987', en: 'Analyzing 8,540 of 12,987' },
+  remaining: { ar: 'متبقي 4,447 تقييم', en: '4,447 reviews remaining' },
 };
 
 const POSITIVE = 'hsl(var(--positive))';
 const NEGATIVE = 'hsl(var(--negative))';
-const PROGRESS_PCT = 9;
+const PROGRESS_PCT = 66;
 const DONUT_PCT = 54;
 
 function Pill({ children }: { children: ReactNode }) {
