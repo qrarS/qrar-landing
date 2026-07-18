@@ -331,28 +331,30 @@
   }
 
   .console-showcase-card--donut {
-    width: 58%;
+    width: 56%;
   }
 
   .console-showcase-card--place {
-    width: 92%;
-    margin-block: 205px 80px;
-    margin-inline: auto 0;
+    width: 90%;
+    margin: 210px 5% 78px;
   }
 
   .console-showcase-card--progress {
-    inset-inline-start: 0;
-    width: 100%;
+    left: 8%;
   }
 }
 
 @media (max-width: 420px) {
   .console-showcase-card--donut {
-    width: 64%;
+    width: 68%;
   }
 
   .console-showcase-card--place {
-    width: 96%;
-    margin-top: 215px;
+    width: 94%;
+    margin: 240px 3% 78px;
+  }
+
+  .console-showcase-card--progress {
+    left: 0;
   }
 }

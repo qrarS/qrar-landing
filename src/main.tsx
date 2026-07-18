@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import SiteApp from './SiteApp';
-import './site.css';
-import './design-responsive.css';
+import './landing.css';
+import './landing-responsive.css';
 
 createRoot(document.getElementById('root')!).render(<SiteApp />);

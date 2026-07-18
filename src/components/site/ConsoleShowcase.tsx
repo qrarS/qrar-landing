@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Loader2, MapPin, Phone, Star, StopCircle } from 'lucide-react';
+import { ChefHat, Loader2, MapPin, Phone, Star, StopCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,7 +12,7 @@ const STR = {
   address: { ar: '251 ب شارع المدينة المنوره ، الرياض', en: '251B Al Madinah Road, Riyadh' },
   phone: '+966 53 814 4466',
   googleChip: 'Google: 4.6',
-  analyzedChip: '(100 / 5,100) ★ 4.7',
+  starsChip: '(100 / 5,100) 4.7',
   priceChip: '£200 – £400',
   donutTitle: { ar: 'التقييم العام', en: 'Overall sentiment' },
   donutSub: { ar: 'يعتمد على آراء العملاء آخر 3 شهور', en: 'Based on the last 3 months of reviews' },
@@ -30,9 +30,20 @@ const NEGATIVE = 'hsl(var(--negative))';
 const PROGRESS_PCT = 66;
 const DONUT_PCT = 54;
 
-function Pill({ children }: { children: ReactNode }) {
+function GoogleG({ className }: { className?: string }) {
   return (
-    <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/50 border border-border/50">
+    <svg viewBox="0 0 48 48" className={className} aria-hidden>
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
+function Pill({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50 border border-border/50', className)}>
       {children}
     </div>
   );
@@ -41,35 +52,34 @@ function Pill({ children }: { children: ReactNode }) {
 function PlaceCard({ className }: { className?: string }) {
   const { pick } = useSiteLanguage();
   return (
-    <Card className={cn('rounded-2xl border-border/60 bg-card/90 shadow-none backdrop-blur-sm overflow-hidden', className)}>
-      <CardContent className="p-4 sm:p-5 space-y-3">
-        <div className="space-y-2">
-          <Badge variant="secondary" className="text-xs gap-1.5 font-normal">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            {pick(STR.category)}
-          </Badge>
-          <h3 className="text-lg sm:text-xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
+    <Card className={cn('rounded-3xl border-0 bg-card/95 shadow-none backdrop-blur-sm overflow-hidden', className)}>
+      <CardContent className="p-6 sm:p-8 space-y-4 text-center">
+        <Badge variant="secondary" className="gap-1.5 px-4 py-1.5 text-sm font-normal text-primary">
+          <ChefHat className="h-4 w-4" />
+          {pick(STR.category)}
+        </Badge>
+        <h3 className="text-2xl sm:text-3xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          <Pill className="text-amber-600">
+            <span className="text-xs font-semibold" dir="ltr">{STR.starsChip}</span>
+            <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+          </Pill>
+          <Pill>
+            <span className="text-xs font-semibold text-foreground" dir="ltr">{STR.googleChip}</span>
+            <GoogleG className="h-3.5 w-3.5" />
+          </Pill>
+          <Pill>
+            <span className="text-xs font-semibold text-primary" dir="ltr">{STR.priceChip}</span>
+          </Pill>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <Pill>
-            <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-            <span className="text-xs text-muted-foreground" dir="ltr">{STR.googleChip}</span>
-          </Pill>
-          <Pill>
-            <span className="text-xs text-muted-foreground" dir="ltr">{STR.analyzedChip}</span>
-          </Pill>
-          <Pill>
-            <span className="text-xs text-muted-foreground" dir="ltr">{STR.priceChip}</span>
-          </Pill>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-start gap-2 text-xs sm:text-sm">
-            <MapPin className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
-            <span className="text-foreground">{pick(STR.address)}</span>
+        <div className="space-y-2 pt-1">
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <MapPin className="h-4 w-4 text-primary shrink-0" />
+            <span className="text-foreground/80">{pick(STR.address)}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs sm:text-sm">
-            <Phone className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-foreground" dir="ltr">{STR.phone}</span>
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <Phone className="h-4 w-4 text-primary shrink-0" />
+            <span className="text-foreground/80" dir="ltr">{STR.phone}</span>
           </div>
         </div>
       </CardContent>
@@ -117,21 +127,21 @@ function Donut({ value }: { value: number }) {
 function SentimentCard({ className }: { className?: string }) {
   const { pick } = useSiteLanguage();
   return (
-    <Card className={cn('rounded-2xl border-border/60 bg-card/90 shadow-none backdrop-blur-sm', className)}>
-      <CardContent className="p-4 space-y-2 text-center">
+    <Card className={cn('rounded-3xl border-0 bg-card/95 shadow-none backdrop-blur-sm', className)}>
+      <CardContent className="p-5 space-y-4 text-center">
         <div>
-          <h3 className="text-sm font-bold text-foreground">{pick(STR.donutTitle)}</h3>
-          <p className="text-[10px] text-muted-foreground leading-snug mt-0.5">{pick(STR.donutSub)}</p>
+          <h3 className="text-base font-bold text-foreground">{pick(STR.donutTitle)}</h3>
+          <p className="text-[10px] text-muted-foreground leading-snug mt-1">{pick(STR.donutSub)}</p>
         </div>
         <Donut value={DONUT_PCT} />
-        <div className="flex flex-wrap justify-center gap-3">
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: POSITIVE }} />
-            <span className="text-[10px] text-muted-foreground">{pick(STR.legendPositive)}</span>
+        <div className="flex justify-between px-1 pt-1">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: POSITIVE }} />
+            <span className="text-[11px] text-muted-foreground">{pick(STR.legendPositive)}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: NEGATIVE }} />
-            <span className="text-[10px] text-muted-foreground">{pick(STR.legendNegative)}</span>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: NEGATIVE }} />
+            <span className="text-[11px] text-muted-foreground">{pick(STR.legendNegative)}</span>
           </div>
         </div>
       </CardContent>
@@ -142,27 +152,27 @@ function SentimentCard({ className }: { className?: string }) {
 function ProgressCard({ className }: { className?: string }) {
   const { pick } = useSiteLanguage();
   return (
-    <div className={cn('rounded-2xl border border-primary/30 bg-card/90 backdrop-blur-sm p-4', className)}>
-      <div className="flex items-center gap-3 mb-3">
+    <div className={cn('rounded-3xl bg-card/95 backdrop-blur-sm p-5', className)}>
+      <div className="flex items-center gap-4 mb-3">
+        <div className="text-3xl font-bold tabular-nums text-foreground shrink-0" dir="ltr">{PROGRESS_PCT}%</div>
+        <div className="flex-1 min-w-0 text-start">
+          <h3 className="font-bold text-foreground text-base">{pick(STR.analyzing)}</h3>
+          <p className="text-xs text-muted-foreground truncate">{pick(STR.progressSub)}</p>
+        </div>
         <Button
           variant="destructive"
           size="sm"
-          className="gap-2 rounded-lg pointer-events-none shrink-0"
+          className="gap-2 rounded-full px-4 pointer-events-none shrink-0"
           tabIndex={-1}
         >
           <StopCircle className="h-4 w-4" />
           <span className="text-xs">{pick(STR.stop)}</span>
         </Button>
-        <div className="flex-1 min-w-0 text-start">
-          <h3 className="font-semibold text-foreground text-sm">{pick(STR.analyzing)}</h3>
-          <p className="text-xs text-muted-foreground truncate">{pick(STR.progressSub)}</p>
-        </div>
-        <div className="text-xl font-bold tabular-nums text-foreground" dir="ltr">{PROGRESS_PCT}%</div>
       </div>
-      <div className="relative h-2.5 bg-muted rounded-full overflow-hidden mb-2">
+      <div className="relative h-3 bg-muted rounded-full overflow-hidden mb-2">
         <div className="absolute inset-y-0 start-0 rounded-full bg-primary" style={{ width: `${PROGRESS_PCT}%` }} />
       </div>
-      <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+      <span className="text-xs text-muted-foreground flex items-center justify-end gap-1.5">
         <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
         {pick(STR.remaining)}
       </span>
@@ -180,8 +190,8 @@ export function ConsoleShowcase({ compact = false }: { compact?: boolean }) {
     >
       <div className="console-artwork-glow" />
       <div className="console-showcase-canvas">
-        <SentimentCard className="console-showcase-card console-showcase-card--donut" />
         <PlaceCard className="console-showcase-card console-showcase-card--place" />
+        <SentimentCard className="console-showcase-card console-showcase-card--donut" />
         <ProgressCard className="console-showcase-card console-showcase-card--progress" />
       </div>
     </div>
