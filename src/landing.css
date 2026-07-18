@@ -312,6 +312,9 @@
   .console-showcase-canvas {
     position: relative;
     z-index: 2;
+    /* flow-root contains child margins — without it they collapse through
+       this wrapper and spacing tweaks silently do nothing. */
+    display: flow-root;
   }
 
   .console-showcase-card {
@@ -319,45 +322,28 @@
   }
 
   /* Composition mirrors the approved mockup and is intentionally physical
-     (left/right, not logical) so it looks identical in AR and EN: big place
-     card center-right, donut hanging over its top-left corner, progress bar
-     across the bottom overhanging its right edge. The place card is the
-     anchor; its margins reserve the space the other two cards float in. */
-  .console-showcase-card--place {
-    position: relative;
-    width: 78%;
-    margin: 420px 14% 210px 8%;
-    z-index: 1;
-    animation: showcase-float-b 8.5s ease-in-out -3.4s infinite alternate;
-  }
-
+     (left/right, not logical) so it looks identical in AR and EN: donut
+     top-left, big place card center-right, progress bar bottom-right.
+     The cards are in normal flow, so the margins between them are real,
+     guaranteed gaps regardless of font metrics. */
   .console-showcase-card--donut {
-    position: absolute;
-    top: -48px;
-    left: 0;
     width: 30%;
-    z-index: 2;
+    margin-bottom: 40px;
     animation: showcase-float-a 7s ease-in-out -1.2s infinite alternate;
   }
 
+  .console-showcase-card--place {
+    width: 78%;
+    margin-left: 8%;
+    margin-right: 14%;
+    animation: showcase-float-b 8.5s ease-in-out -3.4s infinite alternate;
+  }
+
   .console-showcase-card--progress {
-    position: absolute;
-    bottom: -56px;
-    left: 36%;
-    right: 0;
-    z-index: 3;
+    width: 64%;
+    margin-top: 44px;
+    margin-left: 36%;
     animation: showcase-float-c 6.2s ease-in-out -4.6s infinite alternate;
-  }
-
-  /* The final CTA card clips at its own border (overflow hidden), so the
-     compact variant hangs the progress card less far down and keeps the
-     tighter spacing so the card doesn't balloon. */
-  .console-artwork--compact .console-showcase-card--progress {
-    bottom: -28px;
-  }
-
-  .console-artwork--compact .console-showcase-card--place {
-    margin: 260px 14% 140px 8%;
   }
 
   @keyframes showcase-float-a {

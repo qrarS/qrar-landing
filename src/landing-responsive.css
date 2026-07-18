@@ -332,16 +332,19 @@
 
   .console-showcase-card--donut {
     width: 56%;
+    margin-bottom: 32px;
   }
 
   .console-showcase-card--place {
     width: 90%;
-    margin: 450px 5% 195px;
+    margin-left: 5%;
+    margin-right: 5%;
   }
 
   .console-showcase-card--progress {
-    left: 8%;
-    bottom: -40px;
+    width: 92%;
+    margin-top: 36px;
+    margin-left: 8%;
   }
 }
 
@@ -352,10 +355,12 @@
 
   .console-showcase-card--place {
     width: 94%;
-    margin: 470px 3% 195px;
+    margin-left: 3%;
+    margin-right: 3%;
   }
 
   .console-showcase-card--progress {
-    left: 0;
+    width: 100%;
+    margin-left: 0;
   }
 }
