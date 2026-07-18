@@ -1,43 +1,82 @@
 /*
- * Responsive contract for the approved 1920 px landing composition.
- * Desktop canvases scale proportionally; tablets and phones reflow without
- * inheriting the fixed dimensions used by the reference artwork.
+ * Responsive contract for the Figma 1920 px landing composition.
+ * Large desktop canvases preserve the reference proportions. Laptop, tablet,
+ * and phone widths use native layout so text and controls remain readable.
  */
 
 @media (min-width: 1181px) and (max-width: 1919px) {
   .design-page {
-    width: 1920px;
-    zoom: calc(100vw / 1920px);
+    width: 100%;
+    zoom: 1;
   }
 
-  .design-hero { min-height: 1000px; }
-  .design-hero-copy h1 { font-size: 108px; }
-  .design-hero-copy > p { font-size: 27px; }
-  .design-intro h2 { font-size: 88px; }
-  .design-features .design-intro h2 { font-size: 96px; }
-  .design-audience-copy h2,
-  .design-testimonial-copy h2 { font-size: 96px; }
-  .design-najd-inner h2,
-  .design-final-copy h2 { font-size: 90px; }
+  .design-features .design-intro h2 {
+    font-size: clamp(60px, 5vw, 96px);
+  }
 
-  .design-header-nav { gap: 28px; }
-  .design-header-logo img { width: 210px; }
+  .design-workflow-card {
+    min-height: clamp(340px, 21.36vw, 410px);
+    padding: clamp(31px, 1.82vw, 35px) clamp(32px, 1.98vw, 38px);
+  }
+
+  .design-workflow-card h3 {
+    font-size: clamp(46px, 3.34vw, 64px);
+  }
+
+  .design-workflow-card p {
+    font-size: clamp(20px, 1.25vw, 24px);
+  }
+
+  .design-feature-card {
+    min-height: clamp(300px, 17.46vw, 335px);
+  }
+
+  .design-audience-visual {
+    min-height: clamp(760px, 54.2vw, 1040px);
+  }
+
+  .design-audience-visual > img {
+    height: clamp(760px, 54.2vw, 1040px);
+  }
+
+  .design-audience-item h3 {
+    font-size: clamp(32px, 2.5vw, 42px);
+  }
+
+  .design-price-card {
+    min-height: clamp(700px, 42.2vw, 810px);
+    padding-inline: clamp(24px, 1.56vw, 30px);
+  }
+
+  .design-pricing-grid--extended .design-price-card {
+    min-height: clamp(560px, 36.5vw, 700px);
+  }
+
+  .design-header-nav {
+    min-height: 94px;
+    gap: clamp(16px, calc(3.75vw - 44px), 28px);
+  }
+
+  .design-header-logo img {
+    width: clamp(124px, calc(18.75vw - 150px), 210px);
+  }
 
   .design-header-links a,
   .design-header-links span {
-    padding: 10px 20px;
-    font-size: 20px;
+    padding-inline: clamp(14px, calc(1.875vw - 16px), 20px);
+    font-size: clamp(15px, calc(1.5625vw - 10px), 20px);
   }
 
   .design-language-button,
   .design-header-signin,
   .design-header-signup {
-    padding: 11px 20px;
-    font-size: 18px;
+    min-width: 0;
+    padding-inline: clamp(16px, calc(1.25vw - 4px), 20px);
+    font-size: clamp(15px, .9375vw, 18px);
   }
 
-  .design-header-signin { min-width: 154px; }
-  .design-header-signup { min-width: 134px; }
+  .design-header-signin { min-width: 130px; }
+  .design-header-signup { min-width: 118px; }
 }
 
 @media (min-width: 681px) and (max-width: 1180px) {

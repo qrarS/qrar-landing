@@ -198,15 +198,18 @@ function Audience() {
   const { landing } = usePublishedLanding();
   const { pick } = useSiteLanguage();
   const section = landing.content.audience;
+  const imageUrl = ['/assets/qrar-audience-photo.jpg', '/assets/qrar-audience.png'].includes(section.imageUrl)
+    ? '/assets/qrar-audience-figma.webp'
+    : section.imageUrl;
 
   return (
     <section id="audience" className="design-section design-audience">
       <div className="site-container design-audience-grid">
         <div className="design-audience-visual">
-          <img src={section.imageUrl} alt={pick(section.imageAlt)} />
+          <img src={imageUrl} alt={pick(section.imageAlt)} />
           <div className="design-audience-note">
-            <span>{pick(section.items[0]?.title || { en: 'Positive review', ar: 'تقييم إيجابي' })}</span>
-            <strong>{pick(section.items[0]?.body || { en: 'Customer trust is growing', ar: 'ثقة عملائك هي نقطة قوتك' })}</strong>
+            <span>{pick({ en: 'From your customers', ar: 'من عملائك' })}</span>
+            <strong>{pick({ en: 'Customer trust is your advantage', ar: 'ثقة عملائك هي نقطة قوتك' })}</strong>
           </div>
         </div>
         <div className="design-audience-copy">

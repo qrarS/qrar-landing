@@ -323,8 +323,8 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
     eyebrow: bi('Who we serve', 'من نخدم؟'),
     title: bi('Built for everyone who relies on customer trust', 'صُمم لكل من يعتمد على ثقة العملاء'),
     body: bi('', ''),
-    imageUrl: '/assets/qrar-audience-photo.jpg',
-    imageAlt: bi('A business leader reviewing customer insight', 'قائد أعمال يراجع رؤى العملاء'),
+    imageUrl: '/assets/qrar-audience-figma.webp',
+    imageAlt: bi('A Saudi business leader representing customer trust', 'قائد أعمال سعودي يمثل ثقة العملاء'),
     items: [
       { id: 'restaurants', icon: 'coffee', title: bi('Restaurants and cafés', 'المطاعم والكافيهات'), body: bi('Analyze the complete dining experience, from food to atmosphere.', 'تحليل التجربة الكاملة من الطعام للخدمة للجو العام.') },
       { id: 'retail', icon: 'building-2', title: bi('Stores and retail chains', 'المحلات والسلاسل التجارية'), body: bi('Compare locations and discover why one branch performs better.', 'قارن فروعك واكتشف من يؤدي الأفضل ولماذا.') },

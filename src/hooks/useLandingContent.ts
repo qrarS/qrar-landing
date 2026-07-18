@@ -23,8 +23,8 @@ export type LandingSource = 'published' | 'cache' | 'fallback' | 'preview';
 const CONSOLE_URL = (import.meta.env.VITE_QRAR_CONSOLE_URL || 'https://console.qrar.ai').replace(/\/$/, '');
 const CONTENT_ENDPOINT = import.meta.env.VITE_QRAR_CONTENT_ENDPOINT
   || 'https://ukskidcsercplsklvdar.supabase.co/functions/v1/public-landing';
-const CACHE_KEY = 'qrar-landing-home3-publication-v1';
-const LEGACY_CACHE_KEYS = ['qrar-landing-publication-v1'];
+const CACHE_KEY = 'qrar-landing-figma-publication-v1';
+const LEGACY_CACHE_KEYS = ['qrar-landing-publication-v1', 'qrar-landing-home3-publication-v1'];
 
 const fallback: PublishedLanding = {
   schemaVersion: LANDING_SCHEMA_VERSION,

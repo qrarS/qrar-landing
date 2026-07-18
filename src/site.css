@@ -493,8 +493,8 @@
 
   .design-audience-note {
     position: absolute;
-    inset-inline-end: 32px;
-    top: 35px;
+    inset-inline-start: 32px;
+    bottom: 35px;
     width: min(82%, 430px);
     padding: 23px 27px;
     border: 1px solid rgb(255 255 255 / 75%);
@@ -1633,7 +1633,8 @@
 
   .design-audience-note {
     inset-inline: 18px;
-    top: 18px;
+    top: auto;
+    bottom: 18px;
     width: auto;
     padding: 18px;
     border-radius: 20px;
