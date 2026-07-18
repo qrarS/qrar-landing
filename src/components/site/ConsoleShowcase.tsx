@@ -48,7 +48,7 @@ function PlaceCard({ className }: { className?: string }) {
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
             {pick(STR.category)}
           </Badge>
-          <h3 className="text-base sm:text-lg font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <Pill>
@@ -79,9 +79,9 @@ function PlaceCard({ className }: { className?: string }) {
 
 function Donut({ value }: { value: number }) {
   const { pick } = useSiteLanguage();
-  const SIZE = 132;
-  const R = 50;
-  const STROKE = 14;
+  const SIZE = 148;
+  const R = 56;
+  const STROKE = 15;
   const C = 2 * Math.PI * R;
   // Round linecaps extend each dash end by STROKE / 2, so reserve that on top
   // of the visible gap to keep segments from touching.
