@@ -333,7 +333,7 @@
 
   .console-showcase-card--donut {
     position: absolute;
-    top: 0;
+    top: -26px;
     left: 0;
     width: 30%;
     z-index: 2;
@@ -342,7 +342,7 @@
 
   .console-showcase-card--progress {
     position: absolute;
-    bottom: 0;
+    bottom: -30px;
     left: 36%;
     right: 0;
     z-index: 3;
