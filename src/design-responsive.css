@@ -1,0 +1,478 @@
+/*
+ * Responsive contract for the approved 1920 px landing composition.
+ * Desktop canvases scale proportionally; tablets and phones reflow without
+ * inheriting the fixed dimensions used by the reference artwork.
+ */
+
+@media (min-width: 1181px) and (max-width: 1919px) {
+  .design-page {
+    width: 1920px;
+    zoom: calc(100vw / 1920px);
+  }
+
+  .design-hero { min-height: 1000px; }
+  .design-hero-copy h1 { font-size: 108px; }
+  .design-hero-copy > p { font-size: 27px; }
+  .design-intro h2 { font-size: 88px; }
+  .design-features .design-intro h2 { font-size: 96px; }
+  .design-audience-copy h2,
+  .design-testimonial-copy h2 { font-size: 96px; }
+  .design-najd-inner h2,
+  .design-final-copy h2 { font-size: 90px; }
+
+  .design-header-nav { gap: 28px; }
+  .design-header-logo img { width: 210px; }
+
+  .design-header-links a,
+  .design-header-links span {
+    padding: 10px 20px;
+    font-size: 20px;
+  }
+
+  .design-language-button,
+  .design-header-signin,
+  .design-header-signup {
+    padding: 11px 20px;
+    font-size: 18px;
+  }
+
+  .design-header-signin { min-width: 154px; }
+  .design-header-signup { min-width: 134px; }
+}
+
+@media (min-width: 681px) and (max-width: 1180px) {
+  .site-container {
+    max-width: none;
+    padding-inline: clamp(30px, 4.2vw, 48px);
+  }
+
+  [dir='rtl'] .design-hero-copy h1,
+  [dir='rtl'] .design-intro h2,
+  [dir='rtl'] .design-features .design-intro h2,
+  [dir='rtl'] .design-najd-inner h2,
+  [dir='rtl'] .design-final-copy h2,
+  [dir='ltr'] .design-hero-copy h1,
+  [dir='ltr'] .design-intro h2,
+  [dir='ltr'] .design-features .design-intro h2,
+  [dir='ltr'] .design-najd-inner h2,
+  [dir='ltr'] .design-final-copy h2 {
+    transform: none;
+  }
+
+  [dir='rtl'] .design-hero .console-artwork,
+  [dir='ltr'] .design-hero .console-artwork {
+    transform: none;
+  }
+
+  [dir='rtl'] .design-header-logo img,
+  [dir='ltr'] .design-header-logo img,
+  [dir='rtl'] .design-footer-brand img,
+  [dir='ltr'] .design-footer-brand img {
+    position: static;
+    transform: none;
+  }
+
+  .design-button {
+    min-height: 56px;
+    padding: 11px 23px;
+    font-size: 17px;
+  }
+
+  .design-hero {
+    min-height: auto;
+    padding: 118px 0 82px;
+  }
+
+  .design-hero-copy h1 {
+    font-size: clamp(52px, 6.1vw, 68px);
+    line-height: 1.08;
+  }
+
+  .design-hero-copy > p {
+    margin-top: 24px;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .design-hero-copy .design-actions { margin-top: 24px; }
+
+  .design-stats {
+    max-width: 570px;
+    margin-top: 44px;
+  }
+
+  .design-stat-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .design-stat small { font-size: 13px; }
+  .design-stat strong { font-size: 32px; }
+
+  .design-intro h2,
+  .design-features .design-intro h2 {
+    max-width: 780px;
+    font-size: clamp(46px, 5.8vw, 64px);
+    line-height: 1.12;
+  }
+
+  .design-intro-heading-row { display: block; }
+  .design-intro-heading-row small { display: none; }
+
+  .design-workflow,
+  .design-features,
+  .design-audience,
+  .design-pricing,
+  .design-testimonials,
+  .design-najd,
+  .design-final {
+    padding-block: 86px;
+  }
+
+  .design-workflow-cards,
+  .design-feature-grid {
+    gap: 15px;
+    margin-top: 60px;
+  }
+
+  .design-workflow-card {
+    min-height: 285px;
+    padding: 29px;
+    border-radius: 28px;
+  }
+
+  .design-workflow-card .design-icon-bubble {
+    inset-inline-start: 28px;
+    top: 28px;
+    width: 62px;
+    height: 62px;
+  }
+
+  .design-workflow-number { font-size: 112px; }
+
+  .design-workflow-card h3 {
+    font-size: clamp(32px, 3.4vw, 40px);
+  }
+
+  .design-workflow-card p {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .design-feature-card {
+    min-height: 270px;
+    padding: 36px 24px 28px;
+    border-radius: 26px;
+  }
+
+  .design-feature-card .design-icon-bubble {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+  }
+
+  .design-feature-card h3 { font-size: 30px; }
+  .design-feature-card p { font-size: 17px; }
+
+  .design-audience-grid { gap: 48px; }
+
+  .design-audience-visual {
+    min-height: 600px;
+  }
+
+  .design-audience-visual > img {
+    height: 600px;
+    border-radius: 30px;
+  }
+
+  .design-audience-copy h2 {
+    font-size: clamp(48px, 5.7vw, 62px);
+  }
+
+  .design-audience-list { margin-top: 36px; }
+
+  .design-audience-item {
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .design-audience-item > span {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+  }
+
+  .design-audience-item h3 { font-size: 28px; }
+  .design-audience-item p { font-size: 16px; }
+
+  .design-billing-toggle { margin-top: 40px; }
+  .design-pricing-grid { margin-top: 42px; }
+
+  .design-price-card {
+    min-height: 0;
+    padding: 28px 22px 22px;
+    border-radius: 26px;
+  }
+
+  .design-price-heading > span { font-size: 26px; }
+  .design-price-heading > strong { margin-top: 16px; font-size: 28px; }
+  .design-price-heading > strong b { font-size: 38px; }
+  .design-price-heading > strong small { font-size: 18px; }
+  .design-price-heading > strong.design-price-custom { font-size: 35px; }
+
+  .design-price-heading > p {
+    min-height: 40px;
+    margin-top: 13px;
+    font-size: 16px;
+  }
+
+  .design-price-card ul {
+    gap: 8px;
+    margin: 22px 0 28px;
+  }
+
+  .design-price-card li { font-size: 16px; }
+
+  .design-price-action {
+    min-height: 50px;
+    font-size: 18px;
+  }
+
+  .design-pricing-extended { margin-top: 54px; }
+  .design-pricing-extended > h3 { font-size: 31px; }
+  .design-pricing-grid--extended .design-price-card { min-height: 0; }
+
+  .design-testimonials { min-height: auto; }
+  .design-testimonial-grid { gap: 48px; }
+
+  .design-testimonial-copy h2 {
+    font-size: clamp(50px, 5.7vw, 64px);
+  }
+
+  .design-testimonial-copy p {
+    margin-top: 22px;
+    font-size: 18px;
+  }
+
+  .design-testimonial-copy .design-button { margin-top: 34px; }
+
+  .design-testimonial-wall figure {
+    min-height: 160px;
+    padding: 20px;
+  }
+
+  .design-najd { min-height: auto; }
+
+  .design-najd-inner > img {
+    width: 180px;
+    margin-bottom: -22px;
+  }
+
+  .design-najd-inner h2 {
+    font-size: clamp(50px, 5.7vw, 64px);
+  }
+
+  .design-najd-inner > p {
+    max-width: 850px;
+    font-size: 18px;
+  }
+
+  .design-najd-prompts {
+    margin-top: 32px;
+    gap: 9px;
+  }
+
+  .design-najd-prompts span {
+    padding: 10px 17px;
+    font-size: 15px;
+  }
+
+  .design-najd-inner .design-button { margin-top: 44px; }
+
+  .design-final-card {
+    min-height: 560px;
+    padding: 44px;
+  }
+
+  .design-final-copy h2 {
+    font-size: clamp(50px, 5.7vw, 64px);
+  }
+
+  .design-final-copy p { font-size: 18px; }
+  .design-credit-note { margin-top: 32px; }
+
+  .design-footer {
+    min-height: auto;
+    padding: 62px 0 26px;
+  }
+
+  .design-footer-main {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    padding-bottom: 52px;
+  }
+
+  .design-footer-brand img { width: 230px; }
+
+  .design-footer-columns h2 { font-size: 21px; }
+
+  .design-footer-columns a,
+  .design-footer-columns span { font-size: 17px; }
+}
+
+@media (min-width: 981px) and (max-width: 1180px) {
+  .design-hero-inner {
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+    gap: 26px;
+  }
+
+  .design-hero .console-artwork {
+    width: 112%;
+    margin-top: 0;
+  }
+
+  .design-final-card .console-artwork {
+    transform: translate(-2%, 8%) scale(1.08);
+  }
+
+  [dir='ltr'] .design-final-card .console-artwork {
+    transform: translate(2%, 8%) scale(1.08);
+  }
+}
+
+@media (min-width: 681px) and (max-width: 980px) {
+  .design-hero { padding-top: 108px; }
+
+  .design-hero .console-artwork {
+    width: min(90%, 720px);
+    margin: 38px auto 0;
+  }
+
+  .design-workflow-card { min-height: 220px; }
+
+  .design-audience-visual,
+  .design-audience-visual > img {
+    min-height: 0;
+    height: 560px;
+  }
+
+  .design-testimonial-wall { margin-top: 48px; }
+
+  .design-final-card .console-artwork {
+    width: min(88%, 650px);
+    margin: 35px auto -28px;
+  }
+
+  .design-footer-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .design-hero {
+    padding-bottom: 58px;
+  }
+
+  .design-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .design-stat {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 7px;
+    text-align: center;
+  }
+
+  .design-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .design-stat small {
+    min-height: 28px;
+    font-size: 11px;
+  }
+
+  .design-stat strong { font-size: 29px; }
+
+  .console-artwork {
+    width: 105%;
+    margin-inline: -2.5%;
+  }
+
+  .design-workflow,
+  .design-features,
+  .design-audience,
+  .design-pricing,
+  .design-testimonials,
+  .design-najd,
+  .design-final {
+    padding-block: 66px;
+  }
+
+  .design-workflow-cards,
+  .design-feature-grid {
+    gap: 14px;
+    margin-top: 40px;
+  }
+
+  .design-workflow-card {
+    min-height: 215px;
+    padding: 25px;
+  }
+
+  .design-workflow-card .design-icon-bubble {
+    inset-inline-start: 25px;
+    top: 25px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .design-feature-card {
+    min-height: 0;
+    padding: 34px 22px;
+  }
+
+  .design-feature-card .design-icon-bubble {
+    width: 62px;
+    height: 62px;
+  }
+
+  .design-price-card {
+    min-height: 0;
+    padding: 28px 23px 22px;
+  }
+
+  .design-price-heading > span { font-size: 26px; }
+  .design-price-heading > strong { font-size: 27px; }
+  .design-price-heading > strong b { font-size: 39px; }
+  .design-price-heading > strong small { font-size: 18px; }
+  .design-price-heading > strong.design-price-custom { font-size: 34px; }
+  .design-price-heading > p { min-height: 0; font-size: 16px; }
+  .design-price-card li { font-size: 16px; }
+
+  .design-price-action {
+    min-height: 50px;
+    font-size: 18px;
+  }
+
+  .design-testimonial-wall {
+    gap: 12px;
+    margin-top: 44px;
+  }
+
+  .design-testimonial-wall figure:nth-child(n + 4) {
+    display: none;
+  }
+
+  .design-najd-inner .design-button { margin-top: 40px; }
+
+  .design-final-card .console-artwork {
+    width: 112%;
+    margin: 36px -6% -26px;
+  }
+}
