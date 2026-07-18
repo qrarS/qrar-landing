@@ -330,7 +330,9 @@
   .console-showcase-anchor {
     position: relative;
     width: 84%;
-    margin: 252px auto 96px;
+    /* Top/bottom traded 50px so the whole composition sits 50px higher
+       while the canvas height (and grid centering) stays the same. */
+    margin: 202px auto 146px;
   }
 
   .console-showcase-card--place {
