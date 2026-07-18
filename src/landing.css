@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Salma's U+060C outline is the Latin comma shifted above the baseline.
+   Exclude it so Arabic commas use the browser's correct fallback glyph. */
+
 @font-face {
   font-family: 'Salma Arabic';
   src: url('/src/assets/fonts/SalmaArabic-Light.otf') format('opentype');
   font-weight: 300;
   font-display: swap;
+  unicode-range: U+0000-060B, U+060D-10FFFF;
 }
 
 @font-face {
@@ -14,6 +18,7 @@
   src: url('/src/assets/fonts/SalmaArabic-Regular.otf') format('opentype');
   font-weight: 400;
   font-display: swap;
+  unicode-range: U+0000-060B, U+060D-10FFFF;
 }
 
 @font-face {
@@ -21,6 +26,7 @@
   src: url('/src/assets/fonts/SalmaArabic-Medium.otf') format('opentype');
   font-weight: 500;
   font-display: swap;
+  unicode-range: U+0000-060B, U+060D-10FFFF;
 }
 
 @font-face {
@@ -28,6 +34,7 @@
   src: url('/src/assets/fonts/SalmaArabic-Bold.otf') format('opentype');
   font-weight: 700;
   font-display: swap;
+  unicode-range: U+0000-060B, U+060D-10FFFF;
 }
 
 @font-face {
@@ -35,6 +42,7 @@
   src: url('/src/assets/fonts/SalmaArabic-Black.otf') format('opentype');
   font-weight: 900;
   font-display: swap;
+  unicode-range: U+0000-060B, U+060D-10FFFF;
 }
 
 @layer base {
