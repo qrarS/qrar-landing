@@ -329,4 +329,32 @@
     width: 100%;
     margin: 30px 0 0;
   }
+
+  .console-showcase {
+    aspect-ratio: 640 / 640;
+  }
+
+  .console-showcase-card--donut {
+    width: 50%;
+  }
+
+  .console-showcase-card--place {
+    top: 11%;
+    width: 68%;
+  }
+
+  .console-showcase-card--progress {
+    inset-inline-start: 2%;
+    width: 88%;
+  }
+}
+
+@media (max-width: 420px) {
+  .console-showcase {
+    aspect-ratio: 640 / 700;
+  }
+
+  .console-showcase-card--place {
+    width: 76%;
+  }
 }

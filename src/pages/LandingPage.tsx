@@ -32,6 +32,7 @@ import {
   WandSparkles,
   type LucideIcon,
 } from 'lucide-react';
+import { ConsoleShowcase } from '@/components/site/ConsoleShowcase';
 import { SiteAction } from '@/components/site/SiteAction';
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
@@ -84,19 +85,6 @@ function SectionIntro({ section, callouts = false }: { section: LandingSectionBa
   );
 }
 
-function ConsoleArtwork({ compact = false }: { compact?: boolean }) {
-  const { isArabic } = useSiteLanguage();
-  return (
-    <div className={cn('console-artwork', compact && 'console-artwork--compact')}>
-      <div className="console-artwork-glow" />
-      <img
-        src="/assets/qrar-console-preview.webp"
-        alt={isArabic ? 'معاينة منصة قرار لتحليل تقييمات العملاء' : 'Qrar customer-review analysis preview'}
-      />
-    </div>
-  );
-}
-
 function Hero() {
   const { landing } = usePublishedLanding();
   const { pick, isArabic } = useSiteLanguage();
@@ -136,7 +124,7 @@ function Hero() {
             })}
           </div>
         </div>
-        <ConsoleArtwork />
+        <ConsoleShowcase />
       </div>
     </section>
   );
@@ -406,7 +394,7 @@ function FinalCall() {
             </div>
             <span className="design-credit-note"><WalletCards size={20} />{isArabic ? 'لا يحتاج بطاقة ائتمان — ابدأ في ثوانٍ' : 'No credit card required — start in seconds'}</span>
           </div>
-          <ConsoleArtwork compact />
+          <ConsoleShowcase compact />
         </div>
       </div>
     </section>
