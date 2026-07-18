@@ -257,7 +257,7 @@
   }
 
   .design-hero .console-artwork {
-    width: min(100%, 520px);
+    width: min(100%, 560px);
     margin-top: 0;
   }
 }
@@ -266,7 +266,7 @@
   .design-hero { padding-top: 106px; }
 
   .design-hero .console-artwork {
-    width: min(90%, 620px);
+    width: min(92%, 680px);
     margin: 38px auto 0;
   }
 
@@ -281,7 +281,7 @@
   .design-testimonial-wall { margin-top: 48px; }
 
   .design-final-card .console-artwork {
-    width: min(88%, 560px);
+    width: min(90%, 600px);
     margin: 35px auto 0;
   }
 
@@ -330,31 +330,32 @@
     margin: 30px 0 0;
   }
 
-  .console-showcase {
-    aspect-ratio: 640 / 640;
-  }
-
   .console-showcase-card--donut {
-    width: 50%;
+    width: 56%;
   }
 
   .console-showcase-card--place {
-    top: 11%;
-    width: 68%;
+    width: 88%;
+    margin: 96px auto 56px;
   }
 
   .console-showcase-card--progress {
-    inset-inline-start: 2%;
-    width: 88%;
+    inset-inline-start: 0;
+    width: 96%;
   }
 }
 
 @media (max-width: 420px) {
-  .console-showcase {
-    aspect-ratio: 640 / 700;
+  .console-showcase-card--donut {
+    width: 62%;
   }
 
   .console-showcase-card--place {
-    width: 76%;
+    width: 94%;
+    margin-top: 110px;
+  }
+
+  .console-showcase-card--progress {
+    width: 100%;
   }
 }

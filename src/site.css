@@ -297,7 +297,7 @@
 
   .console-artwork {
     position: relative;
-    width: min(100%, 640px);
+    width: min(100%, 720px);
     margin-inline: auto;
   }
 
@@ -309,41 +309,40 @@
     filter: blur(75px);
   }
 
-  .console-showcase {
-    aspect-ratio: 1000 / 818;
-  }
-
   .console-showcase-canvas {
-    position: absolute;
-    inset: 0;
+    position: relative;
     z-index: 2;
   }
 
   .console-showcase-card {
-    position: absolute;
     box-shadow: 0 30px 46px rgb(84 42 109 / 13%);
   }
 
-  .console-showcase-card--donut {
-    top: 0;
-    inset-inline-start: 0;
-    width: 44%;
-    z-index: 2;
-    animation: showcase-float-a 7s ease-in-out -1.2s infinite alternate;
-  }
-
+  /* The place card is the centered anchor; its block margins reserve the
+     space the donut and progress cards float into, so the overlaps hold
+     regardless of font metrics. */
   .console-showcase-card--place {
-    top: 13%;
-    inset-inline-end: 0;
-    width: 58%;
+    position: relative;
+    width: 76%;
+    margin: 116px auto 64px;
     z-index: 1;
     animation: showcase-float-b 8.5s ease-in-out -3.4s infinite alternate;
   }
 
+  .console-showcase-card--donut {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 48%;
+    z-index: 2;
+    animation: showcase-float-a 7s ease-in-out -1.2s infinite alternate;
+  }
+
   .console-showcase-card--progress {
-    bottom: 2%;
-    inset-inline-start: 7%;
-    width: 74%;
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: 2%;
+    width: 84%;
     z-index: 3;
     animation: showcase-float-c 6.2s ease-in-out -4.6s infinite alternate;
   }
@@ -1057,7 +1056,7 @@
   }
 
   .console-artwork--compact {
-    width: min(100%, 560px);
+    width: min(100%, 600px);
   }
 
   .design-preview-banner {

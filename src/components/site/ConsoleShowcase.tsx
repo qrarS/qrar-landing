@@ -79,9 +79,9 @@ function PlaceCard({ className }: { className?: string }) {
 
 function Donut({ value }: { value: number }) {
   const { pick } = useSiteLanguage();
-  const SIZE = 120;
-  const R = 45;
-  const STROKE = 13;
+  const SIZE = 132;
+  const R = 50;
+  const STROKE = 14;
   const C = 2 * Math.PI * R;
   // Round linecaps extend each dash end by STROKE / 2, so reserve that on top
   // of the visible gap to keep segments from touching.
