@@ -53,32 +53,32 @@ function PlaceCard({ className }: { className?: string }) {
   const { pick } = useSiteLanguage();
   return (
     <Card className={cn('rounded-3xl border-0 bg-card/95 shadow-none backdrop-blur-sm overflow-hidden', className)}>
-      <CardContent className="p-6 sm:p-8 space-y-4 text-center">
-        <Badge variant="secondary" className="gap-1.5 px-4 py-1.5 text-sm font-normal text-primary">
-          <ChefHat className="h-4 w-4" />
+      <CardContent className="p-8 sm:p-10 space-y-5 text-center">
+        <Badge variant="secondary" className="gap-2 px-5 py-2 text-sm font-normal text-primary">
+          <ChefHat className="h-5 w-5" />
           {pick(STR.category)}
         </Badge>
-        <h3 className="text-2xl sm:text-3xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
-        <div className="flex items-center justify-center gap-2 flex-wrap">
-          <Pill className="text-amber-600">
-            <span className="text-xs font-semibold" dir="ltr">{STR.starsChip}</span>
-            <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+        <h3 className="text-3xl sm:text-4xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
+        <div className="flex items-center justify-center gap-2.5 flex-wrap">
+          <Pill className="text-amber-600 px-4 py-2">
+            <span className="text-sm font-semibold" dir="ltr">{STR.starsChip}</span>
+            <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
           </Pill>
-          <Pill>
-            <span className="text-xs font-semibold text-foreground" dir="ltr">{STR.googleChip}</span>
-            <GoogleG className="h-3.5 w-3.5" />
+          <Pill className="px-4 py-2">
+            <span className="text-sm font-semibold text-foreground" dir="ltr">{STR.googleChip}</span>
+            <GoogleG className="h-4 w-4" />
           </Pill>
-          <Pill>
-            <span className="text-xs font-semibold text-primary" dir="ltr">{STR.priceChip}</span>
+          <Pill className="px-4 py-2">
+            <span className="text-sm font-semibold text-primary" dir="ltr">{STR.priceChip}</span>
           </Pill>
         </div>
-        <div className="space-y-2 pt-1">
-          <div className="flex items-center justify-center gap-2 text-sm">
-            <MapPin className="h-4 w-4 text-primary shrink-0" />
+        <div className="space-y-2.5 pt-1">
+          <div className="flex items-center justify-center gap-2 text-base">
+            <MapPin className="h-5 w-5 text-primary shrink-0" />
             <span className="text-foreground/80">{pick(STR.address)}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 text-sm">
-            <Phone className="h-4 w-4 text-primary shrink-0" />
+          <div className="flex items-center justify-center gap-2 text-base">
+            <Phone className="h-5 w-5 text-primary shrink-0" />
             <span className="text-foreground/80" dir="ltr">{STR.phone}</span>
           </div>
         </div>
