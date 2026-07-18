@@ -333,7 +333,7 @@
 
   .console-showcase-card--donut {
     position: absolute;
-    top: -26px;
+    top: -48px;
     left: 0;
     width: 30%;
     z-index: 2;
@@ -342,11 +342,17 @@
 
   .console-showcase-card--progress {
     position: absolute;
-    bottom: -30px;
+    bottom: -56px;
     left: 36%;
     right: 0;
     z-index: 3;
     animation: showcase-float-c 6.2s ease-in-out -4.6s infinite alternate;
+  }
+
+  /* The final CTA card clips at its own border (overflow hidden), so the
+     compact variant hangs the progress card less far down. */
+  .console-artwork--compact .console-showcase-card--progress {
+    bottom: -28px;
   }
 
   @keyframes showcase-float-a {
