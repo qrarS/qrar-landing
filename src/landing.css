@@ -321,28 +321,39 @@
     box-shadow: 0 30px 46px rgb(84 42 109 / 13%);
   }
 
-  /* Composition mirrors the approved mockup and is intentionally physical
-     (left/right, not logical) so it looks identical in AR and EN: donut
-     top-left, big place card center-right, progress bar bottom-right.
-     The cards are in normal flow, so the margins between them are real,
-     guaranteed gaps regardless of font metrics. */
-  .console-showcase-card--donut {
-    width: 30%;
-    margin-bottom: 40px;
-    animation: showcase-float-a 7s ease-in-out -1.2s infinite alternate;
+  /* The place card is big and centered; the donut and progress cards are
+     absolutely anchored to its corners via the anchor wrapper, touching the
+     top-right and bottom-right of the place card with an exact 52px bite —
+     calc(100% - 52px) is measured from the place card's real edges, so the
+     touch depth never depends on font metrics. Physical left/right keeps
+     the composition identical in AR and EN. */
+  .console-showcase-anchor {
+    position: relative;
+    width: 76%;
+    margin: 252px auto 96px;
   }
 
   .console-showcase-card--place {
-    width: 78%;
-    margin-left: 8%;
-    margin-right: 14%;
+    position: relative;
+    z-index: 1;
     animation: showcase-float-b 8.5s ease-in-out -3.4s infinite alternate;
   }
 
+  .console-showcase-card--donut {
+    position: absolute;
+    bottom: calc(100% - 52px);
+    right: -64px;
+    width: 40%;
+    z-index: 2;
+    animation: showcase-float-a 7s ease-in-out -1.2s infinite alternate;
+  }
+
   .console-showcase-card--progress {
-    width: 64%;
-    margin-top: 44px;
-    margin-left: 36%;
+    position: absolute;
+    top: calc(100% - 52px);
+    right: -72px;
+    width: 88%;
+    z-index: 3;
     animation: showcase-float-c 6.2s ease-in-out -4.6s infinite alternate;
   }
 

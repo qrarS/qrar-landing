@@ -190,9 +190,11 @@ export function ConsoleShowcase({ compact = false }: { compact?: boolean }) {
     >
       <div className="console-artwork-glow" />
       <div className="console-showcase-canvas">
-        <SentimentCard className="console-showcase-card console-showcase-card--donut" />
-        <PlaceCard className="console-showcase-card console-showcase-card--place" />
-        <ProgressCard className="console-showcase-card console-showcase-card--progress" />
+        <div className="console-showcase-anchor">
+          <PlaceCard className="console-showcase-card console-showcase-card--place" />
+          <SentimentCard className="console-showcase-card console-showcase-card--donut" />
+          <ProgressCard className="console-showcase-card console-showcase-card--progress" />
+        </div>
       </div>
     </div>
   );

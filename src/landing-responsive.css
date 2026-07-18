@@ -330,37 +330,29 @@
     margin: 30px 0 0;
   }
 
-  .console-showcase-card--donut {
-    width: 56%;
-    margin-bottom: 32px;
-  }
-
-  .console-showcase-card--place {
+  .console-showcase-anchor {
     width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin: 280px auto 100px;
   }
 
-  .console-showcase-card--progress {
-    width: 92%;
-    margin-top: 36px;
-    margin-left: 8%;
-  }
-}
-
-@media (max-width: 420px) {
   .console-showcase-card--donut {
-    width: 68%;
-  }
-
-  .console-showcase-card--place {
-    width: 94%;
-    margin-left: 3%;
-    margin-right: 3%;
+    width: 60%;
+    right: -12px;
   }
 
   .console-showcase-card--progress {
     width: 100%;
-    margin-left: 0;
+    right: -10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .console-showcase-anchor {
+    width: 94%;
+    margin: 310px auto 100px;
+  }
+
+  .console-showcase-card--donut {
+    width: 70%;
   }
 }
