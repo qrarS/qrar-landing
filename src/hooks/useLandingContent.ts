@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   DEFAULT_LANDING_CONTENT,
+  DEFAULT_LANDING_TIERS,
   LANDING_SCHEMA_VERSION,
   validateLandingContent,
   type LandingPageContent,
@@ -29,7 +30,7 @@ const fallback: PublishedLanding = {
   revision: 0,
   publishedAt: null,
   content: DEFAULT_LANDING_CONTENT,
-  tiers: [],
+  tiers: DEFAULT_LANDING_TIERS,
   signupDisabled: false,
   auth: {
     signupUrl: `${CONSOLE_URL}/signup`,
