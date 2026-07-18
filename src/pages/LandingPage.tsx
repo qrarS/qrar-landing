@@ -87,10 +87,13 @@ function SectionIntro({ section, callouts = false }: { section: LandingSectionBa
 
 function Hero() {
   const { landing } = usePublishedLanding();
-  const { pick, isArabic } = useSiteLanguage();
+  const { pick, isArabic, language } = useSiteLanguage();
   const hero = landing.content.hero;
   const Arrow = isArabic ? ArrowLeft : ArrowRight;
   const statIcons = [UserRound, Store, ChartNoAxesCombined];
+  const metricFormatter = new Intl.NumberFormat(language === 'ar' ? 'ar-SA' : 'en-US', {
+    maximumFractionDigits: 0,
+  });
 
   return (
     <section id="top" className="design-hero">
@@ -115,10 +118,11 @@ function Hero() {
           <div className="design-stats">
             {hero.stats.map((stat, index) => {
               const Icon = statIcons[index] || Sparkles;
+              const value = landing.usageMetrics?.[stat.metric];
               return (
                 <div className="design-stat" key={`${pick(stat.label)}-${index}`}>
                   <span className="design-stat-icon"><Icon size={21} /></span>
-                  <div><small>{pick(stat.label)}</small><strong>{pick(stat.value)}</strong></div>
+                  <div><small>{pick(stat.label)}</small><strong>{value === undefined ? '—' : metricFormatter.format(value)}</strong></div>
                 </div>
               );
             })}

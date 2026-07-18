@@ -154,7 +154,7 @@ function ProgressCard({ className }: { className?: string }) {
   return (
     <div className={cn('rounded-3xl bg-card/95 backdrop-blur-sm p-5', className)}>
       <div className="flex items-center gap-4 mb-3">
-        <div className="text-3xl font-bold tabular-nums text-foreground shrink-0" dir="ltr">{PROGRESS_PCT}%</div>
+        <div className="console-showcase-progress-percent text-3xl font-bold tabular-nums shrink-0" dir="ltr">{PROGRESS_PCT}%</div>
         <div className="flex-1 min-w-0 text-start">
           <h3 className="font-bold text-foreground text-base">{pick(STR.analyzing)}</h3>
           <p className="text-xs text-muted-foreground truncate">{pick(STR.progressSub)}</p>

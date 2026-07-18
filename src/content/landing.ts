@@ -4,7 +4,7 @@
 // the browser admin bundle. Published documents are immutable snapshots of this
 // contract; bump LANDING_SCHEMA_VERSION when making a breaking change.
 
-export const LANDING_SCHEMA_VERSION = 1 as const;
+export const LANDING_SCHEMA_VERSION = 2 as const;
 
 export interface LocalizedText {
   en: string;
@@ -34,8 +34,17 @@ export interface LandingSectionBase {
   body: LocalizedText;
 }
 
+export type LandingMetricKey = 'reviewsAnalyzed' | 'businessLocations' | 'comparedLocations';
+
+export interface LandingUsageMetrics {
+  reviewsAnalyzed: number;
+  businessLocations: number;
+  comparedLocations: number;
+  updatedAt: string;
+}
+
 export interface LandingStat {
-  value: LocalizedText;
+  metric: LandingMetricKey;
   label: LocalizedText;
 }
 
@@ -44,6 +53,36 @@ export interface LandingCard {
   icon: string;
   title: LocalizedText;
   body: LocalizedText;
+}
+
+export interface LandingAboutContent {
+  seo: {
+    title: LocalizedText;
+    description: LocalizedText;
+  };
+  hero: {
+    eyebrow: LocalizedText;
+    title: LocalizedText;
+    body: LocalizedText;
+  };
+  mission: {
+    eyebrow: LocalizedText;
+    title: LocalizedText;
+    body: LocalizedText;
+  };
+  values: {
+    eyebrow: LocalizedText;
+    title: LocalizedText;
+    body: LocalizedText;
+    items: LandingCard[];
+  };
+  finalCta: {
+    eyebrow: LocalizedText;
+    title: LocalizedText;
+    body: LocalizedText;
+    primaryCta: LandingLink;
+    secondaryCta: LandingLink;
+  };
 }
 
 export interface LandingPageContent {
@@ -57,6 +96,7 @@ export interface LandingPageContent {
     signInLabel: LocalizedText;
     signUpLabel: LocalizedText;
   };
+  about: LandingAboutContent;
   hero: LandingSectionBase & {
     titlePrefix: LocalizedText;
     titleHighlight: LocalizedText;
@@ -266,11 +306,89 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
       link('Home', 'الصفحة الرئيسية', 'anchor', 'top'),
       link('Product', 'المنتج', 'anchor', 'features'),
       link('Pricing', 'الأسعار', 'anchor', 'pricing'),
-      link('About us', 'من نحن', 'placeholder'),
+      link('About us', 'من نحن', 'route', '/about'),
       link('Contact us', 'تواصل معنا', 'mailto', 'hello@qrar.ai'),
     ],
     signInLabel: bi('Sign in', 'تسجيل الدخول'),
     signUpLabel: bi('Start free', 'ابدأ مجاناً'),
+  },
+  about: {
+    seo: {
+      title: bi('About Qrar | Decisions grounded in customer feedback', 'عن قرار | قرارات مبنية على آراء العملاء'),
+      description: bi(
+        'Learn how Qrar helps businesses turn Google Maps reviews into clear evidence, prioritized opportunities, and practical action.',
+        'تعرّف على كيف يساعد قرار المنشآت على تحويل تقييمات خرائط Google إلى أدلة واضحة وأولويات قابلة للتنفيذ.',
+      ),
+    },
+    hero: {
+      eyebrow: bi('About Qrar', 'عن قرار'),
+      title: bi('We turn customer feedback into clearer business decisions', 'نحوّل آراء العملاء إلى قرارات أعمال أوضح'),
+      body: bi(
+        'Customers explain what is working and what needs attention every day. Qrar brings those signals together, analyzes them with AI, and gives teams a practical view of what to improve next.',
+        'يشارك العملاء يومياً ما ينجح وما يحتاج إلى تحسين. يجمع قرار هذه الإشارات ويحللها بالذكاء الاصطناعي ليمنح فرق العمل رؤية عملية لما ينبغي تحسينه بعد ذلك.',
+      ),
+    },
+    mission: {
+      eyebrow: bi('Our mission', 'مهمتنا'),
+      title: bi('Make the voice of the customer useful, accessible, and actionable', 'أن نجعل صوت العميل مفيداً وسهل الوصول وقابلاً للتطبيق'),
+      body: bi(
+        'Qrar is built for teams that want to move beyond scattered comments and assumptions. We organize review evidence into strengths, weaknesses, comparisons, and prioritized recommendations so decisions stay connected to what customers actually said.',
+        'بُني قرار للفرق التي تريد تجاوز التعليقات المتفرقة والافتراضات. ننظم أدلة التقييمات في نقاط قوة ومواطن ضعف ومقارنات وتوصيات مرتبة بالأولوية، لتبقى القرارات مرتبطة بما قاله العملاء فعلاً.',
+      ),
+    },
+    values: {
+      eyebrow: bi('How we build', 'كيف نبني قرار'),
+      title: bi('Principles behind every Qrar experience', 'مبادئ تقود كل تجربة في قرار'),
+      body: bi('', ''),
+      items: [
+        {
+          id: 'evidence',
+          icon: 'search-check',
+          title: bi('Evidence before assumptions', 'الأدلة قبل الافتراضات'),
+          body: bi(
+            'Insights remain traceable to real reviews, so teams can understand why a recommendation matters.',
+            'تبقى الرؤى مرتبطة بتقييمات حقيقية، حتى يفهم الفريق سبب أهمية كل توصية.',
+          ),
+        },
+        {
+          id: 'bilingual',
+          icon: 'languages',
+          title: bi('Arabic-first, bilingual by design', 'تجربة عربية أولاً وثنائية اللغة'),
+          body: bi(
+            'Qrar is designed for Arabic and English workflows, not translated as an afterthought.',
+            'صُمم قرار لسير العمل بالعربية والإنجليزية من البداية، لا كترجمة لاحقة.',
+          ),
+        },
+        {
+          id: 'action',
+          icon: 'list-checks',
+          title: bi('Practical action over dashboards', 'إجراءات عملية لا مجرد لوحات'),
+          body: bi(
+            'We turn patterns into clear priorities teams can discuss, assign, and act on.',
+            'نحوّل الأنماط إلى أولويات واضحة يمكن للفرق مناقشتها وتوزيعها وتنفيذها.',
+          ),
+        },
+        {
+          id: 'responsible-ai',
+          icon: 'shield-check',
+          title: bi('Responsible use of AI', 'استخدام مسؤول للذكاء الاصطناعي'),
+          body: bi(
+            'AI supports judgment with organized evidence; it does not replace context, accountability, or human decisions.',
+            'يدعم الذكاء الاصطناعي الحكم البشري بأدلة منظمة، ولا يستبدل السياق أو المسؤولية أو القرار الإنساني.',
+          ),
+        },
+      ],
+    },
+    finalCta: {
+      eyebrow: bi('Start with evidence', 'ابدأ بالأدلة'),
+      title: bi('Ready to understand what your customers are telling you?', 'هل أنت مستعد لفهم ما يقوله عملاؤك؟'),
+      body: bi(
+        'Connect your Google Maps location and turn customer feedback into your next clear action.',
+        'اربط موقعك على خرائط Google وحوّل آراء العملاء إلى خطوتك العملية التالية.',
+      ),
+      primaryCta: link('Start free', 'ابدأ مجاناً', 'signup'),
+      secondaryCta: link('Contact us', 'تواصل معنا', 'mailto', 'hello@qrar.ai'),
+    },
   },
   hero: {
     enabled: true, order: 10, eyebrow: bi('', ''),
@@ -285,9 +403,9 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
     primaryCta: link('Start free — no credit card', 'ابدأ مجاناً — لا يحتاج بطاقة ائتمان', 'signup'),
     secondaryCta: link('See how it works', 'شاهد كيف يعمل', 'anchor', 'how-it-works'),
     stats: [
-      { value: bi('+10,000', '+10,000'), label: bi('reviews analyzed', 'تقييم محلل') },
-      { value: bi('+500', '+500'), label: bi('business locations', 'موقع تجاري') },
-      { value: bi('98%', '98%'), label: bi('customer satisfaction', 'رضا العملاء') },
+      { metric: 'reviewsAnalyzed', label: bi('reviews analyzed', 'تقييمات تم تحليلها') },
+      { metric: 'businessLocations', label: bi('business locations analyzed', 'مواقع تجارية تم تحليلها') },
+      { metric: 'comparedLocations', label: bi('locations compared', 'مواقع تمت مقارنتها') },
     ],
   },
   workflow: {
@@ -388,7 +506,7 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
     tagline: bi('Customer intelligence for clearer, smarter decisions.', 'ذكاء العملاء لقرارات أوضح وأذكى.'),
     columns: [
       { id: 'product', title: bi('Product', 'المنتج'), links: [link('Features', 'المميزات', 'anchor', 'features'), link('Pricing', 'الأسعار', 'anchor', 'pricing'), link('Enterprise plans', 'خطط المؤسسات', 'anchor', 'pricing'), link('Developer API', 'API للمطورين', 'placeholder')] },
-      { id: 'company', title: bi('Company', 'الشركة'), links: [link('About us', 'من نحن', 'placeholder'), link('Blog', 'المدونة', 'placeholder'), link('Careers', 'الوظائف', 'placeholder')] },
+      { id: 'company', title: bi('Company', 'الشركة'), links: [link('About us', 'من نحن', 'route', '/about'), link('Blog', 'المدونة', 'placeholder'), link('Careers', 'الوظائف', 'placeholder')] },
       { id: 'support', title: bi('Contact us', 'تواصل معنا'), links: [link('Support', 'الدعم', 'mailto', 'hello@qrar.ai'), link('Help center', 'مركز المساعدة', 'placeholder'), link('Privacy policy', 'سياسة الخصوصية', 'route', '/privacy'), link('Terms of service', 'شروط الاستخدام', 'route', '/terms')] },
       { id: 'follow', title: bi('Follow us', 'تابعنا'), links: [link('X / Twitter', 'تويتر / X', 'placeholder'), link('LinkedIn', 'لينكدإن', 'placeholder'), link('Instagram', 'إنستغرام', 'placeholder')] },
     ],
@@ -404,9 +522,55 @@ export interface LandingValidationResult {
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+function cloneJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function activateAboutLink(candidate: unknown): void {
+  if (!isObject(candidate) || !isObject(candidate.label)) return;
+  const english = typeof candidate.label.en === 'string' ? candidate.label.en.trim().toLowerCase() : '';
+  const arabic = typeof candidate.label.ar === 'string' ? candidate.label.ar.trim() : '';
+  if (english !== 'about us' && arabic !== 'من نحن') return;
+  candidate.kind = 'route';
+  candidate.value = '/about';
+}
+
+export function upgradeLandingContent(value: unknown): LandingPageContent | null {
+  if (!isObject(value)) return null;
+  if (value.schemaVersion === LANDING_SCHEMA_VERSION) {
+    return validateLandingContent(value).valid ? value as unknown as LandingPageContent : null;
+  }
+  if (value.schemaVersion !== 1) return null;
+
+  try {
+    const upgraded = cloneJson(value) as Record<string, unknown>;
+    upgraded.schemaVersion = LANDING_SCHEMA_VERSION;
+    upgraded.about = cloneJson(DEFAULT_LANDING_CONTENT.about);
+
+    if (isObject(upgraded.hero)) {
+      upgraded.hero.stats = cloneJson(DEFAULT_LANDING_CONTENT.hero.stats);
+    }
+    if (isObject(upgraded.navigation) && Array.isArray(upgraded.navigation.links)) {
+      upgraded.navigation.links.forEach(activateAboutLink);
+    }
+    if (isObject(upgraded.footer) && Array.isArray(upgraded.footer.columns)) {
+      upgraded.footer.columns.forEach((column) => {
+        if (isObject(column) && Array.isArray(column.links)) column.links.forEach(activateAboutLink);
+      });
+    }
+
+    return validateLandingContent(upgraded).valid
+      ? upgraded as unknown as LandingPageContent
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export function validateLandingContent(value: unknown): LandingValidationResult {
   const errors: string[] = [];
   const allowedKinds = new Set<LandingLinkKind>(['anchor', 'signup', 'signin', 'route', 'mailto', 'external', 'placeholder']);
+  const allowedMetrics = new Set<LandingMetricKey>(['reviewsAnalyzed', 'businessLocations', 'comparedLocations']);
 
   const localized = (candidate: unknown, path: string) => {
     if (!isObject(candidate)) {
@@ -478,14 +642,19 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
     localized(hero.titleSuffix, 'hero.titleSuffix');
     landingLink(hero.primaryCta, 'hero.primaryCta');
     landingLink(hero.secondaryCta, 'hero.secondaryCta');
-    if (!Array.isArray(hero.stats) || hero.stats.length > 6) errors.push('hero.stats must contain at most 6 items');
-    else hero.stats.forEach((item, index) => {
-      if (!isObject(item)) errors.push(`hero.stats[${index}] is invalid`);
-      else {
-        localized(item.value, `hero.stats[${index}].value`);
-        localized(item.label, `hero.stats[${index}].label`);
-      }
-    });
+    if (!Array.isArray(hero.stats) || hero.stats.length !== 3) errors.push('hero.stats must contain the 3 production metrics');
+    else {
+      const seenMetrics = new Set<string>();
+      hero.stats.forEach((item, index) => {
+        if (!isObject(item)) errors.push(`hero.stats[${index}] is invalid`);
+        else {
+          if (!allowedMetrics.has(item.metric as LandingMetricKey)) errors.push(`hero.stats[${index}].metric is invalid`);
+          else if (seenMetrics.has(String(item.metric))) errors.push(`hero.stats[${index}].metric is duplicated`);
+          else seenMetrics.add(String(item.metric));
+          localized(item.label, `hero.stats[${index}].label`);
+        }
+      });
+    }
   }
 
   const cards = (candidate: unknown, path: string, limit: number) => {
@@ -510,6 +679,29 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
     cards(value.audience.items, 'audience.items', 8);
     if (typeof value.audience.imageUrl !== 'string' || value.audience.imageUrl.length > 2048) errors.push('audience.imageUrl is invalid');
     localized(value.audience.imageAlt, 'audience.imageAlt');
+  }
+
+  if (!isObject(value.about)) errors.push('about is required');
+  else {
+    if (!isObject(value.about.seo)) errors.push('about.seo is required');
+    else {
+      localized(value.about.seo.title, 'about.seo.title');
+      localized(value.about.seo.description, 'about.seo.description');
+    }
+    for (const key of ['hero', 'mission', 'values', 'finalCta'] as const) {
+      const block = value.about[key];
+      if (!isObject(block)) errors.push(`about.${key} is required`);
+      else {
+        localized(block.eyebrow, `about.${key}.eyebrow`);
+        localized(block.title, `about.${key}.title`);
+        localized(block.body, `about.${key}.body`);
+      }
+    }
+    if (isObject(value.about.values)) cards(value.about.values.items, 'about.values.items', 8);
+    if (isObject(value.about.finalCta)) {
+      landingLink(value.about.finalCta.primaryCta, 'about.finalCta.primaryCta');
+      landingLink(value.about.finalCta.secondaryCta, 'about.finalCta.secondaryCta');
+    }
   }
 
   if (isObject(value.pricing)) {

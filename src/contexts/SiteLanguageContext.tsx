@@ -14,12 +14,20 @@ const SiteLanguageContext = createContext<SiteLanguageValue | null>(null);
 
 export function SiteLanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<SiteLanguage>(() => {
-    const saved = localStorage.getItem('qrar-language');
-    return saved === 'en' || saved === 'ar' ? saved : 'ar';
+    try {
+      const saved = localStorage.getItem('qrar-language');
+      return saved === 'en' || saved === 'ar' ? saved : 'ar';
+    } catch {
+      return 'ar';
+    }
   });
   const isArabic = language === 'ar';
   useEffect(() => {
-    localStorage.setItem('qrar-language', language);
+    try {
+      localStorage.setItem('qrar-language', language);
+    } catch {
+      // Language switching still works when storage is blocked.
+    }
     document.documentElement.lang = language;
     document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
   }, [isArabic, language]);

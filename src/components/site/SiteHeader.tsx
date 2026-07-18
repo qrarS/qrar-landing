@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpLeft, ArrowUpRight, Globe2, Menu, UserRound, X } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { SiteLogo } from './SiteLogo';
 import { SiteAction } from './SiteAction';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
@@ -9,6 +10,7 @@ import { cn } from '@/lib/utils';
 export function SiteHeader() {
   const { landing } = usePublishedLanding();
   const { language, toggleLanguage, isArabic, pick } = useSiteLanguage();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -34,7 +36,14 @@ export function SiteHeader() {
           <ul className="design-header-links">
             {landing.content.navigation.links.map((link, index) => (
               <li key={`${link.kind}-${index}`}>
-                <SiteAction link={link} className={cn(index === 0 && 'is-current')} />
+                <SiteAction
+                  link={link}
+                  className={cn(
+                    ((location.pathname === '/' && index === 0)
+                      || (link.kind === 'route' && link.value === location.pathname))
+                    && 'is-current',
+                  )}
+                />
               </li>
             ))}
           </ul>
@@ -42,7 +51,7 @@ export function SiteHeader() {
           <div className="design-header-actions">
             <button type="button" className="design-language-button" onClick={toggleLanguage} aria-label={isArabic ? 'Switch to English' : 'التبديل إلى العربية'}>
               <Globe2 size={18} />
-              <span>{language === 'ar' ? 'AR' : 'ع'}</span>
+              <span>{language === 'ar' ? 'EN' : 'ع'}</span>
             </button>
             <SiteAction link={signIn} className="design-header-signin">
               <UserRound size={19} />

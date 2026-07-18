@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   DEFAULT_LANDING_CONTENT,
   DEFAULT_LANDING_TIERS,
   LANDING_SCHEMA_VERSION,
-  validateLandingContent,
+  upgradeLandingContent,
   type LandingPageContent,
   type LandingTierSnapshot,
+  type LandingUsageMetrics,
 } from '@/content/landing';
 
 export interface PublishedLanding {
@@ -14,6 +15,7 @@ export interface PublishedLanding {
   publishedAt: string | null;
   content: LandingPageContent;
   tiers: LandingTierSnapshot[];
+  usageMetrics: LandingUsageMetrics | null;
   signupDisabled: boolean;
   auth: { signupUrl: string; signinUrl: string };
 }
@@ -23,8 +25,12 @@ export type LandingSource = 'published' | 'cache' | 'fallback' | 'preview';
 const CONSOLE_URL = (import.meta.env.VITE_QRAR_CONSOLE_URL || 'https://console.qrar.ai').replace(/\/$/, '');
 const CONTENT_ENDPOINT = import.meta.env.VITE_QRAR_CONTENT_ENDPOINT
   || 'https://ukskidcsercplsklvdar.supabase.co/functions/v1/public-landing';
-const CACHE_KEY = 'qrar-landing-figma-publication-v1';
-const LEGACY_CACHE_KEYS = ['qrar-landing-publication-v1', 'qrar-landing-home3-publication-v1'];
+const CACHE_KEY = 'qrar-landing-figma-publication-v2';
+const LEGACY_CACHE_KEYS = [
+  'qrar-landing-figma-publication-v1',
+  'qrar-landing-publication-v1',
+  'qrar-landing-home3-publication-v1',
+];
 
 const fallback: PublishedLanding = {
   schemaVersion: LANDING_SCHEMA_VERSION,
@@ -32,6 +38,7 @@ const fallback: PublishedLanding = {
   publishedAt: null,
   content: DEFAULT_LANDING_CONTENT,
   tiers: DEFAULT_LANDING_TIERS,
+  usageMetrics: null,
   signupDisabled: false,
   auth: {
     signupUrl: `${CONSOLE_URL}/signup`,
@@ -51,19 +58,37 @@ function isTier(value: unknown): value is LandingTierSnapshot {
     && !!tier.name?.ar;
 }
 
+function parseUsageMetrics(value: unknown): LandingUsageMetrics | null {
+  if (!value || typeof value !== 'object') return null;
+  const candidate = value as Partial<LandingUsageMetrics>;
+  if (
+    !Number.isSafeInteger(candidate.reviewsAnalyzed) || Number(candidate.reviewsAnalyzed) < 0
+    || !Number.isSafeInteger(candidate.businessLocations) || Number(candidate.businessLocations) < 0
+    || !Number.isSafeInteger(candidate.comparedLocations) || Number(candidate.comparedLocations) < 0
+    || typeof candidate.updatedAt !== 'string'
+  ) return null;
+  return {
+    reviewsAnalyzed: Number(candidate.reviewsAnalyzed),
+    businessLocations: Number(candidate.businessLocations),
+    comparedLocations: Number(candidate.comparedLocations),
+    updatedAt: candidate.updatedAt,
+  };
+}
+
 function parsePublication(value: unknown): PublishedLanding | null {
   if (!value || typeof value !== 'object') return null;
   const candidate = value as Partial<PublishedLanding>;
-  const contentValidation = validateLandingContent(candidate.content);
-  if (candidate.schemaVersion !== LANDING_SCHEMA_VERSION || !contentValidation.valid) return null;
+  const content = upgradeLandingContent(candidate.content);
+  if (!content) return null;
   if (!Array.isArray(candidate.tiers) || !candidate.tiers.every(isTier)) return null;
   if (!candidate.auth || typeof candidate.auth.signupUrl !== 'string' || typeof candidate.auth.signinUrl !== 'string') return null;
   return {
     schemaVersion: LANDING_SCHEMA_VERSION,
     revision: Number(candidate.revision) || 0,
     publishedAt: typeof candidate.publishedAt === 'string' ? candidate.publishedAt : null,
-    content: candidate.content as LandingPageContent,
+    content,
     tiers: candidate.tiers,
+    usageMetrics: parseUsageMetrics(candidate.usageMetrics),
     signupDisabled: Boolean(candidate.signupDisabled),
     // Account destinations are deployment configuration, not editable CMS
     // content. Never let a publication redirect credentials off-console.
@@ -99,6 +124,11 @@ export function useLandingContent() {
   });
   const [source, setSource] = useState<LandingSource>(() => landing.revision > 0 ? 'cache' : 'fallback');
   const [loading, setLoading] = useState(!previewMode);
+  const usageMetricsRef = useRef(landing.usageMetrics);
+
+  useEffect(() => {
+    usageMetricsRef.current = landing.usageMetrics;
+  }, [landing.usageMetrics]);
 
   useEffect(() => {
     // This visual release has a different content density and card contract.
@@ -137,9 +167,12 @@ export function useLandingContent() {
         if (!response.ok) throw new Error(`Landing publication returned ${response.status}`);
         const parsed = parsePublication(await response.json());
         if (!parsed) throw new Error('Landing publication did not match the supported schema');
-        setLanding(parsed);
+        const resolved = parsed.usageMetrics
+          ? parsed
+          : { ...parsed, usageMetrics: usageMetricsRef.current };
+        setLanding(resolved);
         setSource('published');
-        localStorage.setItem(CACHE_KEY, JSON.stringify(parsed));
+        localStorage.setItem(CACHE_KEY, JSON.stringify(resolved));
       } catch (error) {
         if ((error as Error).name !== 'AbortError') {
           // The compiled/cached experience is intentionally complete. Public
