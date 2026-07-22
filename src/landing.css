@@ -342,9 +342,10 @@
   .console-showcase-anchor {
     position: relative;
     width: 84%;
-    /* Top/bottom traded 50px so the whole composition sits 50px higher
-       while the canvas height (and grid centering) stays the same. */
-    margin: 202px auto 146px;
+    /* Top/bottom margins are traded against each other to slide the whole
+       composition vertically while the canvas height (and grid centering)
+       stays the same. */
+    margin: 232px auto 116px;
   }
 
   .console-showcase-card--place {
@@ -419,7 +420,7 @@
   .design-stat small {
     display: block;
     color: var(--qrar-ink);
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.35;
   }
 
@@ -427,7 +428,7 @@
     display: block;
     margin-top: 3px;
     color: var(--qrar-purple);
-    font-size: 28px;
+    font-size: 34px;
     font-weight: 900;
     line-height: 1.25;
   }
