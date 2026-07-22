@@ -420,7 +420,7 @@
   .design-stat small {
     display: block;
     color: var(--qrar-ink);
-    font-size: 16px;
+    font-size: 26px;
     line-height: 1.35;
   }
 
@@ -428,7 +428,7 @@
     display: block;
     margin-top: 3px;
     color: var(--qrar-purple);
-    font-size: 34px;
+    font-size: 52px;
     font-weight: 900;
     line-height: 1.25;
   }
