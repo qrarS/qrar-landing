@@ -1029,6 +1029,14 @@
     padding: 104px 0 128px;
   }
 
+  .design-blob--final {
+    width: 1200px;
+    height: 620px;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+  }
+
   .design-final-card {
     position: relative;
     display: grid;

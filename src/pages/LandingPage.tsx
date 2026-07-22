@@ -387,6 +387,7 @@ function FinalCall() {
 
   return (
     <section id="start" className="design-section design-final">
+      <div className="design-blob design-blob--final" />
       <div className="site-container">
         <div className="design-final-card">
           <div className="design-final-copy">
