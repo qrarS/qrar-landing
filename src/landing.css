@@ -693,12 +693,11 @@
   }
 
   .design-price-badge {
-    position: absolute;
-    inset-inline-start: 25px;
-    top: 28px;
     display: inline-flex;
+    align-self: flex-start;
     align-items: center;
     gap: 5px;
+    margin-bottom: 16px;
     padding: 5px 10px;
     border-radius: 999px;
     color: var(--qrar-purple);
@@ -973,7 +972,7 @@
 
   .design-najd-inner > img {
     width: 180px;
-    margin-bottom: -24px;
+    margin-bottom: 12px;
     filter: drop-shadow(0 25px 28px rgb(83 45 103 / 13%));
   }
 
