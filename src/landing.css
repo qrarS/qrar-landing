@@ -441,6 +441,17 @@
     line-height: 1.35;
   }
 
+  [dir='ltr'] .design-stat small::first-letter {
+    text-transform: uppercase;
+  }
+
+  /* Phones keep the shared 13px size from the mobile block. */
+  @media (min-width: 681px) {
+    [dir='ltr'] .design-stat small {
+      font-size: 22px;
+    }
+  }
+
   .design-stat strong {
     display: block;
     margin-top: 10px;
