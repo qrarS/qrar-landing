@@ -288,6 +288,16 @@
     letter-spacing: 0;
   }
 
+  /* The English title prefix ("Turn customer feedback") just overflows
+     the column at the Arabic-tuned size and breaks into a third line,
+     pushing the stats and collage below the fold. Size it to keep the
+     heading two lines; Arabic keeps the larger scale. */
+  @media (min-width: 981px) {
+    [dir='ltr'] .design-hero-copy h1 {
+      font-size: clamp(34px, 3.5vw, 56px);
+    }
+  }
+
   .design-hero-copy h1 > span { display: block; }
   .design-hero-line-two { margin-top: 2px; }
 
