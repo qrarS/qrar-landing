@@ -128,7 +128,7 @@ function Hero() {
             })}
           </div>
         </div>
-        <ConsoleShowcase />
+        <ConsoleShowcase compact />
       </div>
     </section>
   );
