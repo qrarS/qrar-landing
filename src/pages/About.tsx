@@ -12,6 +12,7 @@ import {
 import { SiteAction } from '@/components/site/SiteAction';
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
+import qrarMark from '@/assets/qrar-mark-white.svg';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
 
@@ -55,7 +56,7 @@ export default function About() {
               <div className="about-hero-art" aria-hidden="true">
                 <div className="about-orbit about-orbit--outer" />
                 <div className="about-orbit about-orbit--inner" />
-                <div className="about-hero-mark">Q</div>
+                <div className="about-hero-mark"><img src={qrarMark} alt="" /></div>
                 <span className="about-signal about-signal--one"><SearchCheck /></span>
                 <span className="about-signal about-signal--two"><Languages /></span>
                 <span className="about-signal about-signal--three"><ListChecks /></span>
@@ -125,7 +126,7 @@ export default function About() {
                   <span className="about-final-ring about-final-ring--two" />
                   <span className="about-final-dot about-final-dot--one" />
                   <span className="about-final-dot about-final-dot--two" />
-                  <div className="about-final-mark">Q</div>
+                  <div className="about-final-mark"><img src={qrarMark} alt="" /></div>
                 </div>
               </div>
             </div>

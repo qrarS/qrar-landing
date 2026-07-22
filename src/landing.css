@@ -1454,15 +1454,17 @@
     place-items: center;
     border: 1px solid rgb(255 255 255 / 60%);
     border-radius: 38px;
-    color: #fff;
     background: linear-gradient(145deg, #c56cf2, var(--qrar-purple));
     box-shadow: 0 28px 60px -28px rgb(80 22 116 / 70%), inset 0 1px rgb(255 255 255 / 36%);
-    font-family: Arial, sans-serif;
-    font-size: 68px;
-    font-weight: 800;
     inset: 50% auto auto 50%;
-    line-height: 1;
     transform: translate(-50%, -50%);
+  }
+
+  .about-hero-mark img,
+  .about-final-mark img {
+    width: auto;
+    height: 58%;
+    user-select: none;
   }
 
   .about-signal {
@@ -1704,7 +1706,6 @@
     width: 104px;
     height: 104px;
     border-radius: 31px;
-    font-size: 55px;
   }
 }
 
