@@ -422,8 +422,9 @@
 
   .design-stat small {
     display: block;
-    color: var(--qrar-ink);
+    color: var(--qrar-purple);
     font-size: 26px;
+    font-weight: 700;
     line-height: 1.35;
   }
 
@@ -719,6 +720,7 @@
   .design-price-heading > strong {
     display: block;
     margin-top: 16px;
+    color: var(--qrar-purple);
     font-size: 24px;
     font-weight: 700;
     line-height: 1.3;
