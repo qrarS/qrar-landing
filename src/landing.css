@@ -390,15 +390,18 @@
   .design-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 620px;
+    gap: 28px;
+    max-width: 720px;
     margin-top: 48px;
   }
 
+  /* Icon, number, and label stack per column so the big numbers share
+     one baseline row no matter how many lines each label wraps to. */
   .design-stat {
     display: flex;
-    align-items: center;
-    gap: 13px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .design-stat-icon,
@@ -426,7 +429,7 @@
 
   .design-stat strong {
     display: block;
-    margin-top: 3px;
+    margin-top: 10px;
     color: var(--qrar-purple);
     font-size: 52px;
     font-weight: 900;
@@ -1912,14 +1915,7 @@
   }
 
   .design-stats {
-    grid-template-columns: 1fr;
-    gap: 15px;
     margin-top: 36px;
-  }
-
-  .design-stat {
-    justify-content: center;
-    text-align: start;
   }
 
   .console-artwork {

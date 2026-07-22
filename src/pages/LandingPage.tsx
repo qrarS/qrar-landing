@@ -122,7 +122,8 @@ function Hero() {
               return (
                 <div className="design-stat" key={`${pick(stat.label)}-${index}`}>
                   <span className="design-stat-icon"><Icon size={21} /></span>
-                  <div><small>{pick(stat.label)}</small><strong>{value === undefined ? '—' : metricFormatter.format(value)}</strong></div>
+                  <strong>{value === undefined ? '—' : metricFormatter.format(value)}</strong>
+                  <small>{pick(stat.label)}</small>
                 </div>
               );
             })}
