@@ -12,7 +12,7 @@ import {
 import { SiteAction } from '@/components/site/SiteAction';
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
-import qrarMark from '@/assets/qrar-mark-dark.svg';
+import qrarMark from '@/assets/qrar-mark-purple.svg';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
 
