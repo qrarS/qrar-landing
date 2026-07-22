@@ -1462,8 +1462,9 @@
 
   .about-hero-mark img,
   .about-final-mark img {
+    display: block;
     width: auto;
-    height: 58%;
+    height: 66px;
     user-select: none;
   }
 
@@ -1706,6 +1707,10 @@
     width: 104px;
     height: 104px;
     border-radius: 31px;
+  }
+
+  .about-final-mark img {
+    height: 54px;
   }
 }
 

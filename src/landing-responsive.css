@@ -402,6 +402,10 @@
     border-radius: 27px;
   }
 
+  .about-hero-mark img {
+    height: 46px;
+  }
+
   .about-signal {
     width: 52px;
     height: 52px;
