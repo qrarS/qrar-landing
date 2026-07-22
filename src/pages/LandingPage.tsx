@@ -232,7 +232,7 @@ function tierAction(tier: LandingTierSnapshot): LandingLink {
     return {
       label: tier.cta.label,
       kind: 'mailto',
-      value: `hello@qrar.ai?subject=${encodeURIComponent(`Qrar ${tier.name.en} plan`)}`,
+      value: `sales@qrar.ai?subject=${encodeURIComponent(`Qrar ${tier.name.en} plan`)}`,
     };
   }
   return { label: tier.cta.label, kind: tier.cta.kind, value: '' };
