@@ -396,14 +396,8 @@
     width: min(100%, 360px);
   }
 
-  .about-hero-mark {
-    width: 88px;
-    height: 88px;
-    border-radius: 27px;
-  }
-
   .about-hero-mark img {
-    height: 46px;
+    height: 88px;
   }
 
   .about-signal {

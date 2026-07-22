@@ -1449,13 +1449,7 @@
   .about-final-mark {
     position: absolute;
     display: grid;
-    width: 128px;
-    height: 128px;
     place-items: center;
-    border: 1px solid rgb(255 255 255 / 60%);
-    border-radius: 38px;
-    background: linear-gradient(145deg, #c56cf2, var(--qrar-purple));
-    box-shadow: 0 28px 60px -28px rgb(80 22 116 / 70%), inset 0 1px rgb(255 255 255 / 36%);
     inset: 50% auto auto 50%;
     transform: translate(-50%, -50%);
   }
@@ -1464,7 +1458,7 @@
   .about-final-mark img {
     display: block;
     width: auto;
-    height: 66px;
+    height: 128px;
     user-select: none;
   }
 
@@ -1703,14 +1697,8 @@
     inset: auto auto 16% 10%;
   }
 
-  .about-final-mark {
-    width: 104px;
-    height: 104px;
-    border-radius: 31px;
-  }
-
   .about-final-mark img {
-    height: 54px;
+    height: 104px;
   }
 }
 
