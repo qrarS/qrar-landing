@@ -404,8 +404,8 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
     secondaryCta: link('See how it works', 'شاهد كيف يعمل', 'anchor', 'how-it-works'),
     stats: [
       { metric: 'reviewsAnalyzed', label: bi('reviews analyzed', 'تقييمات تم تحليلها') },
-      { metric: 'businessLocations', label: bi('business locations analyzed', 'مواقع تجارية تم تحليلها') },
-      { metric: 'comparedLocations', label: bi('locations compared', 'مواقع تمت مقارنتها') },
+      { metric: 'businessLocations', label: bi('Business analyzed', 'مواقع تجارية تم تحليلها') },
+      { metric: 'comparedLocations', label: bi('Business compared', 'مواقع تمت مقارنتها') },
     ],
   },
   workflow: {
@@ -535,9 +535,24 @@ function activateAboutLink(candidate: unknown): void {
   candidate.value = '/about';
 }
 
+const RENAMED_STAT_LABELS_EN: Record<string, string> = {
+  'business locations analyzed': 'Business analyzed',
+  'locations compared': 'Business compared',
+};
+
+function renameLegacyStatLabels(candidate: unknown): void {
+  if (!isObject(candidate) || !isObject(candidate.hero) || !Array.isArray(candidate.hero.stats)) return;
+  for (const stat of candidate.hero.stats) {
+    if (!isObject(stat) || !isObject(stat.label) || typeof stat.label.en !== 'string') continue;
+    const renamed = RENAMED_STAT_LABELS_EN[stat.label.en.trim().toLowerCase()];
+    if (renamed) stat.label.en = renamed;
+  }
+}
+
 export function upgradeLandingContent(value: unknown): LandingPageContent | null {
   if (!isObject(value)) return null;
   if (value.schemaVersion === LANDING_SCHEMA_VERSION) {
+    renameLegacyStatLabels(value);
     return validateLandingContent(value).valid ? value as unknown as LandingPageContent : null;
   }
   if (value.schemaVersion !== 1) return null;
