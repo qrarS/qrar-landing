@@ -131,7 +131,10 @@
 
   .design-section {
     position: relative;
-    overflow: hidden;
+    /* Clip sideways only: off-canvas blobs must not cause horizontal
+       scroll, but their glow has to bleed vertically across section
+       boundaries so the background reads as one continuous wash. */
+    overflow-x: clip;
     background: transparent;
   }
 
