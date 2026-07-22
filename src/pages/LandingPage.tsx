@@ -191,18 +191,40 @@ function Audience() {
   const { landing } = usePublishedLanding();
   const { pick } = useSiteLanguage();
   const section = landing.content.audience;
-  const imageUrl = ['/assets/qrar-audience-photo.jpg', '/assets/qrar-audience.png'].includes(section.imageUrl)
-    ? '/assets/qrar-audience-figma.webp'
-    : section.imageUrl;
 
   return (
     <section id="audience" className="design-section design-audience">
       <div className="site-container design-audience-grid">
         <div className="design-audience-visual">
-          <img src={imageUrl} alt={pick(section.imageAlt)} />
-          <div className="design-audience-note">
-            <span>{pick({ en: 'From your customers', ar: 'من عملائك' })}</span>
-            <strong>{pick({ en: 'Customer trust is your advantage', ar: 'ثقة عملائك هي نقطة قوتك' })}</strong>
+          <div className="design-audience-collage">
+            <span className="design-audience-glow" aria-hidden="true" />
+            <img
+              className="design-audience-shot design-audience-shot--dashboard"
+              src={pick({ en: '/assets/qrar-audience-dashboard-en.webp', ar: '/assets/qrar-audience-dashboard-ar.webp' })}
+              alt={pick({ en: 'Qrar dashboard showing rating and sentiment trends over time', ar: 'لوحة قرار تعرض اتجاهات التقييم والانطباعات عبر الزمن' })}
+              width={1000}
+              height={652}
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              className="design-audience-shot design-audience-shot--reputation"
+              src={pick({ en: '/assets/qrar-audience-reputation-en.webp', ar: '/assets/qrar-audience-reputation-ar.webp' })}
+              alt={pick({ en: 'Qrar reputation health score', ar: 'مؤشر السمعة في قرار' })}
+              width={780}
+              height={337}
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              className="design-audience-shot design-audience-shot--chat"
+              src="/assets/qrar-audience-chat.webp"
+              alt={pick({ en: 'Conversation with Najd, Qrar’s smart assistant', ar: 'محادثة مع نجد، مساعد قرار الذكي' })}
+              width={420}
+              height={478}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
         <div className="design-audience-copy">
