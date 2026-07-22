@@ -471,6 +471,12 @@
     line-height: 1;
   }
 
+  /* In RTL the edge bleed clips the decorative leading zero; in LTR it
+     would clip the significant digit, so keep the number fully inside. */
+  [dir='ltr'] .design-workflow-number {
+    inset-inline-end: 10px;
+  }
+
   .design-workflow-card .design-icon-bubble {
     position: absolute;
     inset-inline-start: 30px;
@@ -629,7 +635,6 @@
     width: min(100%, 440px);
     margin: 40px auto 0;
     padding: 5px;
-    direction: rtl;
     border: 1px solid rgb(174 67 236 / 17%);
     border-radius: 999px;
     background: rgb(255 255 255 / 52%);
@@ -668,7 +673,6 @@
     display: grid;
     gap: 14px;
     margin-top: 42px;
-    direction: rtl;
   }
 
   .design-pricing-grid--4 { grid-template-columns: repeat(4, 1fr); }
