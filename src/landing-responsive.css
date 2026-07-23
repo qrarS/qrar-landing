@@ -326,6 +326,21 @@
     padding-bottom: 56px;
   }
 
+  .response-story-steps {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .response-story-step {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .response-story-badges,
+  .response-story-chips,
+  .response-story-style-row {
+    flex-wrap: wrap;
+  }
+
   .design-stats {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;

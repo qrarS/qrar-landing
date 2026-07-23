@@ -33,6 +33,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { ConsoleShowcase } from '@/components/site/ConsoleShowcase';
+import { ResponseStory } from '@/components/site/ResponseStory';
 import { SiteAction } from '@/components/site/SiteAction';
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
@@ -157,6 +158,29 @@ function Workflow() {
             </article>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+const RESPONSE_STORY_INTRO: LandingSectionBase = {
+  enabled: true,
+  order: 25,
+  eyebrow: { en: 'The magic moment', ar: 'اللحظة السحرية' },
+  title: {
+    en: 'One click turns a bad review into an on-brand reply',
+    ar: 'ضغطة واحدة تحوّل التقييم السلبي إلى رد بأسلوب علامتك',
+  },
+  body: { en: '', ar: '' },
+};
+
+function ResponseStorySection() {
+  return (
+    <section id="response-story" className="design-section design-response-story">
+      <div className="design-grid design-grid--center" />
+      <div className="site-container">
+        <SectionIntro section={RESPONSE_STORY_INTRO} />
+        <ResponseStory />
       </div>
     </section>
   );
@@ -443,6 +467,7 @@ export default function LandingPage() {
   const sections = useMemo<Array<{ key: string; enabled: boolean; order: number; node: ReactNode }>>(() => [
     { key: 'hero', enabled: landing.content.hero.enabled, order: landing.content.hero.order, node: <Hero /> },
     { key: 'workflow', enabled: landing.content.workflow.enabled, order: landing.content.workflow.order, node: <Workflow /> },
+    { key: 'responseStory', enabled: true, order: 25, node: <ResponseStorySection /> },
     { key: 'features', enabled: landing.content.features.enabled, order: landing.content.features.order, node: <Features /> },
     { key: 'audience', enabled: landing.content.audience.enabled, order: landing.content.audience.order, node: <Audience /> },
     { key: 'pricing', enabled: landing.content.pricing.enabled, order: landing.content.pricing.order, node: <Pricing /> },

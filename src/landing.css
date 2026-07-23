@@ -400,6 +400,329 @@
     to { transform: translateY(-10px); }
   }
 
+  /* ── Response Story: animated "one click → on-brand reply" demo ── */
+  .design-response-story { padding: 90px 0 96px; }
+
+  .response-story {
+    position: relative;
+    width: min(100%, 900px);
+    margin-inline: auto;
+  }
+
+  .response-story-glow {
+    position: absolute;
+    inset: 6% 10%;
+    border-radius: 50%;
+    background: rgb(215 151 249 / 30%);
+    filter: blur(72px);
+    pointer-events: none;
+  }
+
+  .response-story-card {
+    position: relative;
+    z-index: 2;
+    border: 1px solid hsl(var(--border));
+    border-radius: 20px;
+    background: hsl(var(--card));
+    box-shadow: 0 24px 46px rgb(84 42 109 / 12%);
+    padding: clamp(16px, 3vw, 28px);
+  }
+
+  /* Review card — pink "negative" wash */
+  .response-story-review {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid hsl(var(--negative) / 18%);
+    border-radius: 14px;
+    background: linear-gradient(180deg, hsl(var(--negative) / 5%), hsl(var(--negative) / 8%));
+    padding: 18px 20px;
+  }
+
+  .response-story-review-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .response-story-avatar {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--qrar-soft);
+    color: var(--qrar-purple);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .response-story-name {
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    font-size: clamp(15px, 2.2vw, 17px);
+  }
+
+  .response-story-stars {
+    display: inline-flex;
+    gap: 1px;
+  }
+
+  .response-story-star { fill: none; color: hsl(var(--muted-foreground) / 35%); }
+  .response-story-star.is-on { fill: #f6b21b; color: #f6b21b; }
+
+  .response-story-date {
+    margin-inline-start: auto;
+    color: hsl(var(--muted-foreground));
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .response-story-badges {
+    display: flex;
+    gap: 8px;
+  }
+
+  .rs-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .rs-badge--neg { background: hsl(var(--negative)); color: #fff; }
+  .rs-badge--plain { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); color: hsl(var(--foreground) / 82%); }
+  .rs-badge--prio { background: hsl(var(--negative) / 8%); border: 1px solid hsl(var(--negative) / 28%); color: hsl(var(--negative)); }
+
+  .response-story-text {
+    margin: 0;
+    color: hsl(var(--foreground) / 82%);
+    font-size: clamp(13px, 1.6vw, 15px);
+    line-height: 1.9;
+  }
+
+  .response-story-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rs-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: clamp(11px, 1.4vw, 12px);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .rs-chip--cat { border: 1px solid hsl(var(--negative) / 28%); color: hsl(var(--negative)); }
+  .rs-chip--tool { border: 1px solid hsl(var(--border)); background: hsl(var(--card)); color: hsl(var(--muted-foreground)); }
+  .rs-chip--push { margin-inline-start: auto; }
+
+  /* Animated response zone — four stages share one grid cell (auto-sizes to
+     the tallest, so long Arabic copy never clips like the fixed-height source). */
+  .response-story-stack {
+    display: grid;
+    min-height: clamp(170px, 24vw, 190px);
+    margin-top: 16px;
+  }
+
+  .response-story-stage {
+    grid-area: 1 / 1;
+    opacity: 0;
+    text-align: start;
+    animation: rs-stage 16s infinite;
+  }
+
+  .response-story-stage--center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .response-story-generate {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 34px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #b94df0, #a637e6);
+    color: #fff;
+    font-weight: 700;
+    font-size: clamp(14px, 2vw, 16px);
+    box-shadow: 0 16px 42px -18px rgb(164 54 226 / 78%);
+  }
+
+  .response-story-hint {
+    color: hsl(var(--muted-foreground));
+    font-size: 13px;
+  }
+
+  .response-story-dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .response-story-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--qrar-purple);
+    animation: rs-dots 1.2s infinite;
+  }
+
+  .response-story-generating {
+    color: var(--qrar-purple);
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .response-story-reply-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--qrar-purple);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .response-story-reply {
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    background: hsl(var(--card));
+    padding: 14px 16px;
+    color: hsl(var(--foreground) / 82%);
+    font-size: clamp(13px, 1.6vw, 14px);
+    line-height: 1.7;
+  }
+
+  .response-story-reply--styled {
+    border-color: hsl(var(--primary) / 35%);
+    font-size: clamp(14px, 1.7vw, 15px);
+    line-height: 1.9;
+  }
+
+  .response-story-reply-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .rs-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border: 1px solid hsl(var(--border));
+    border-radius: 10px;
+    background: hsl(var(--card));
+    color: hsl(var(--foreground) / 82%);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .response-story-style-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .rs-style-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--qrar-soft);
+    color: var(--qrar-purple);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .response-story-phone {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: rgb(174 67 236 / 14%);
+    color: var(--qrar-purple);
+    font-weight: 700;
+    animation: rs-glow 2s infinite;
+  }
+
+  .response-story-caption {
+    display: inline-block;
+    margin-top: 10px;
+    color: hsl(var(--muted-foreground));
+    font-size: 12px;
+  }
+
+  .response-story-steps {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid hsl(var(--border));
+  }
+
+  .response-story-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: hsl(var(--foreground) / 82%);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .response-story-step-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--qrar-soft);
+    color: var(--qrar-purple);
+    font-size: 12px;
+    font-weight: 700;
+    animation: rs-step 16s infinite;
+  }
+
+  @keyframes rs-stage {
+    0% { opacity: 0; transform: translateY(10px); }
+    4%, 22% { opacity: 1; transform: translateY(0); }
+    27%, 100% { opacity: 0; transform: translateY(-6px); }
+  }
+
+  @keyframes rs-dots {
+    0%, 80%, 100% { opacity: .2; }
+    40% { opacity: 1; }
+  }
+
+  @keyframes rs-step {
+    0%, 22% { background: var(--qrar-purple); color: #fff; }
+    27%, 100% { background: var(--qrar-soft); color: var(--qrar-purple); }
+  }
+
+  @keyframes rs-glow {
+    0%, 100% { background: rgb(174 67 236 / 10%); }
+    50% { background: rgb(174 67 236 / 28%); }
+  }
+
   .design-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1983,6 +2306,7 @@
   }
 
   .design-workflow,
+  .design-response-story,
   .design-features,
   .design-audience,
   .design-pricing,
@@ -2146,4 +2470,16 @@
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* The global rule above would freeze every Response Story stage at opacity:0
+   (they animate up from hidden), leaving a blank box. Pin the final styled-reply
+   state and mark step 4 active so the section still reads statically. */
+@media (prefers-reduced-motion: reduce) {
+  .response-story-stage { opacity: 0 !important; animation: none !important; }
+  .response-story-stage--final { opacity: 1 !important; transform: none !important; }
+  .response-story-dot,
+  .response-story-phone { animation: none !important; }
+  .response-story-step-num { background: var(--qrar-soft) !important; color: var(--qrar-purple) !important; }
+  .response-story-step-num--last { background: var(--qrar-purple) !important; color: #fff !important; }
 }
