@@ -274,11 +274,13 @@ function PricingCard({ tier, yearly }: { tier: LandingTierSnapshot; yearly: bool
 
   return (
     <article className={cn('design-price-card', tier.featured && 'design-price-card--featured')}>
-      {(pick(tier.badge) || tier.featured) && (
-        <span className="design-price-badge"><Star size={13} fill="currentColor" />{pick(tier.badge) || (isArabic ? 'الأكثر شيوعاً' : 'Most popular')}</span>
-      )}
       <div className="design-price-heading">
-        <span>{pick(tier.name)}</span>
+        <span>
+          {pick(tier.name)}
+          {(pick(tier.badge) || tier.featured) && (
+            <span className="design-price-badge"><Star size={13} fill="currentColor" />{pick(tier.badge) || (isArabic ? 'الأكثر شيوعاً' : 'Most popular')}</span>
+          )}
+        </span>
         {custom ? <strong className="design-price-custom">{custom}</strong> : (
           <strong><b>{formatter.format(shownPrice)}</b> {tier.currency}<small>{pick(section.perMonthLabel)}</small></strong>
         )}

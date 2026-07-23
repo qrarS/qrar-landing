@@ -749,19 +749,27 @@
 
   .design-price-badge {
     display: inline-flex;
-    align-self: flex-start;
+    flex-shrink: 0;
     align-items: center;
     gap: 5px;
-    margin-bottom: 16px;
     padding: 5px 10px;
     border-radius: 999px;
     color: var(--qrar-purple);
     background: rgb(174 67 236 / 10%);
     font-size: 12px;
     font-weight: 700;
+    white-space: nowrap;
   }
 
-  .design-price-heading > span { display: block; color: var(--qrar-purple); font-size: 20px; font-weight: 700; }
+  .design-price-heading > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--qrar-purple);
+    font-size: 20px;
+    font-weight: 700;
+  }
 
   .design-price-heading > strong {
     display: block;
