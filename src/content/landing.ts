@@ -549,10 +549,31 @@ function renameLegacyStatLabels(candidate: unknown): void {
   }
 }
 
+const LEGACY_ARABIC_COPY: Record<string, string> = {
+  'استخبارات جدوى الموقع': 'قراءة السوق حول كل موقع',
+};
+
+function normalizeLegacyArabicCopy(candidate: unknown): void {
+  if (Array.isArray(candidate)) {
+    candidate.forEach(normalizeLegacyArabicCopy);
+    return;
+  }
+  if (!isObject(candidate)) return;
+
+  for (const [key, value] of Object.entries(candidate)) {
+    if (key === 'ar' && typeof value === 'string' && LEGACY_ARABIC_COPY[value]) {
+      candidate[key] = LEGACY_ARABIC_COPY[value];
+    } else {
+      normalizeLegacyArabicCopy(value);
+    }
+  }
+}
+
 export function upgradeLandingContent(value: unknown): LandingPageContent | null {
   if (!isObject(value)) return null;
   if (value.schemaVersion === LANDING_SCHEMA_VERSION) {
     renameLegacyStatLabels(value);
+    normalizeLegacyArabicCopy(value);
     return validateLandingContent(value).valid ? value as unknown as LandingPageContent : null;
   }
   if (value.schemaVersion !== 1) return null;
@@ -561,6 +582,7 @@ export function upgradeLandingContent(value: unknown): LandingPageContent | null
     const upgraded = cloneJson(value) as Record<string, unknown>;
     upgraded.schemaVersion = LANDING_SCHEMA_VERSION;
     upgraded.about = cloneJson(DEFAULT_LANDING_CONTENT.about);
+    normalizeLegacyArabicCopy(upgraded);
 
     if (isObject(upgraded.hero)) {
       upgraded.hero.stats = cloneJson(DEFAULT_LANDING_CONTENT.hero.stats);
