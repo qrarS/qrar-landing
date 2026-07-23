@@ -15,57 +15,56 @@ import type { LocalizedText } from '@/content/landing';
 
 // Fixed illustrative demo (like ConsoleShowcase) — copy lives here, not in the CMS.
 const STR = {
-  reviewerName: { en: 'Manar Ahmed', ar: 'فيصل إبراهيم' },
-  date: { en: 'Jun 28, 2026', ar: '١٤ مايو ٢٠٢٦' },
-  sentiment: { en: 'Negative', ar: 'سلبي' },
+  reviewerName: { en: 'Noura Alharbi', ar: 'نورة الحربي' },
+  date: { en: '18 Jul 2026', ar: '١٨ يوليو ٢٠٢٦' },
+  sentiment: { en: 'Needs attention', ar: 'يحتاج متابعة' },
   reviewLang: { en: 'English', ar: 'العربية' },
   priority: { en: 'High Priority', ar: 'أولوية عالية' },
   reviewText: {
-    en: 'The worst matcha ever 🤮',
-    ar: 'للاسف كان عندهم ايسد ماتشا لاتيه خرافي الين امس، اليوم رحتلهم قالو انهم وقفوه ونزلو نوع جديد… وبخصوص الخدمة بالفرع غير جيدة بصراحة وتحتاج الى تحسين خصوصاً فترات الانتظار الغير منطقية.',
+    en: 'I visited the Al Olaya location at lunchtime. The coffee was good, but my order took more than 20 minutes and the reason for the delay was not clear. I hope orders are better organized during peak hours.',
+    ar: 'زرت فرع العليا وقت الظهر. القهوة جيدة، لكن استغرق استلام الطلب أكثر من ٢٠ دقيقة، ولم يتضح سبب التأخير. أتمنى تنظيم الطلبات بشكل أفضل في أوقات الذروة.',
   },
   translate: { en: 'Translate', ar: 'ترجمة' },
   maps: { en: 'View on Google Maps', ar: 'عرض في خرائط Google' },
-  generate: { en: 'Generate Response', ar: 'إنشاء رد' },
-  generateHint: { en: 'One click, for any review', ar: 'ضغطة واحدة لأي تقييم' },
-  generating: { en: 'Generating response…', ar: 'جارٍ إنشاء الرد…' },
-  aiSuggested: { en: 'AI Suggested Response', ar: 'رد مقترح بالذكاء الاصطناعي' },
+  generate: { en: 'Draft a response', ar: 'صياغة مسودة رد' },
+  generateHint: { en: 'Review before publishing', ar: 'راجعها قبل النشر' },
+  generating: { en: 'Drafting response…', ar: 'جارٍ إعداد المسودة…' },
+  aiSuggested: { en: 'AI-generated draft', ar: 'مسودة مقترحة بالذكاء الاصطناعي' },
   aiReply: {
-    en: 'Thank you for your feedback, and we are sorry to hear you were disappointed with the matcha. We would like the chance to make this right — please contact us with the date and time of your visit so we can review what happened and offer a replacement or refund…',
-    ar: 'نشكرك على تقييمك وملاحظاتك، ونعتذر عن أي تجربة غير مرضية في الخدمة. تم رفع طلبكم للإدارة للنظر في إعادة المشروب، كما سنراجع إجراءات التشغيل لتقليل فترات الانتظار وتحسين مستوى الخدمة في الفرع…',
+    en: 'Thank you, Noura, for sharing your experience. We apologize for the long wait at our Al Olaya location. We will review order management during peak hours with the team, and we hope your next visit is better.',
+    ar: 'شكرًا لك يا نورة على مشاركة تجربتك. نعتذر عن طول وقت الانتظار في فرع العليا. سنراجع تنظيم الطلبات خلال أوقات الذروة مع الفريق، ونأمل أن تكون تجربتك القادمة أفضل.',
   },
-  copy: { en: 'Copy', ar: 'نسخ' },
-  regenerate: { en: 'Regenerate', ar: 'إعادة الإنشاء' },
-  suggested: { en: 'Suggested response', ar: 'رد مقترح' },
-  styleChip: { en: 'Style: friendly & brief + phone number', ar: 'النمط: ودّي ومختصر + رقم الجوال' },
+  copy: { en: 'Copy draft', ar: 'نسخ المسودة' },
+  regenerate: { en: 'Create another draft', ar: 'إنشاء مسودة أخرى' },
+  suggested: { en: 'Draft ready for review', ar: 'مسودة جاهزة للمراجعة' },
+  styleChip: { en: 'Tone: professional and brief + contact number', ar: 'النبرة: مهنية ومختصرة + وسيلة تواصل' },
   styledBefore: {
-    en: 'Sorry for the experience, please call ',
-    ar: 'نشكرك على تقييمك، ونعتذر عن إيقاف المشروب وتأخر الخدمة. نرجو التواصل على ',
+    en: 'Thank you, Noura. We apologize for the delay at our Al Olaya location. Please contact us at ',
+    ar: 'شكرًا لك يا نورة. نعتذر عن تأخر طلبك في فرع العليا. نرجو التواصل معنا على ',
   },
-  styledAfter: { en: ' so we can make it right. Thanks.', ar: ' عشان نعوّضك 🌹' },
+  styledAfter: { en: ' so our team can follow up on your experience.', ar: ' ليتابع الفريق تجربتك.' },
   caption: {
-    en: 'Your saved style — applied to every future reply',
-    ar: 'حسب نمطك المحفوظ — يُطبَّق على كل الردود القادمة',
+    en: 'Reviewed and approved by your team before publishing',
+    ar: 'تُراجع المسودة وتُعتمد من فريقك قبل نشرها',
   },
   ariaLabel: {
-    en: 'Demo: how Qrar turns a negative review into a ready-to-send reply in your style',
-    ar: 'عرض توضيحي: كيف يحوّل قرار التقييم السلبي إلى رد جاهز بأسلوبك',
+    en: 'Illustrative demo: Qrar prepares a customer-review reply draft for the team to review before publishing',
+    ar: 'عرض توضيحي: يُعدّ قرار مسودة رد على تقييم العميل ليراجعها الفريق قبل النشر',
   },
 } satisfies Record<string, LocalizedText>;
 
 const PHONE = '0555555555';
 
-// Review chips differ per language (EN: one category; AR: three).
 const CATEGORIES: Record<string, string[]> = {
-  en: ['Beverage Quality'],
-  ar: ['وقت الانتظار', 'جودة الخدمة', 'توفر المنتجات'],
+  en: ['Service speed', 'Wait time', 'Order management'],
+  ar: ['سرعة الخدمة', 'وقت الانتظار', 'تنظيم الطلبات'],
 };
 
 const STEPS: LocalizedText[] = [
-  { en: 'Click "Generate Response"', ar: 'اضغط «إنشاء رد»' },
-  { en: 'AI writes it', ar: 'الذكاء الاصطناعي يكتب' },
-  { en: 'Ready in seconds', ar: 'رد جاهز خلال ثوانٍ' },
-  { en: 'In your style', ar: 'وبأسلوبك أنت' },
+  { en: 'Choose "Draft a response"', ar: 'اختر «صياغة مسودة»' },
+  { en: 'Qrar reads the review context', ar: 'يحلل قرار سياق التقييم' },
+  { en: 'Review and edit the draft', ar: 'راجع المسودة وعدّلها' },
+  { en: 'Approve when ready', ar: 'اعتمد الرد عند جاهزيته' },
 ];
 
 function StarRating({ rating }: { rating: number }) {
@@ -80,7 +79,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function ResponseStory() {
   const { pick, language, isArabic } = useSiteLanguage();
-  const rating = isArabic ? 3 : 1;
+  const rating = 2;
   const digits = new Intl.NumberFormat(isArabic ? 'ar-SA' : 'en-US');
 
   return (

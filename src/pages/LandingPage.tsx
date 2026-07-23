@@ -77,9 +77,9 @@ function SectionIntro({ section, callouts = false }: { section: LandingSectionBa
     <div className="design-intro">
       <span className="design-eyebrow">{pick(section.eyebrow)}</span>
       <div className="design-intro-heading-row">
-        {callouts && <small>{isArabic ? 'ذكاء اصطناعي يفهم عملاءك' : 'AI that understands customers'}</small>}
+        {callouts && <small>{isArabic ? 'تحليل عربي يفهم سياق عملائك' : 'Arabic analysis that understands customer context'}</small>}
         <h2>{pick(section.title)}</h2>
-        {callouts && <small>{isArabic ? 'قرارات مبنية على بيانات حقيقية' : 'Decisions grounded in real data'}</small>}
+        {callouts && <small>{isArabic ? 'نتائج يمكن الرجوع إلى أدلتها' : 'Results you can trace back to the evidence'}</small>}
       </div>
       {pick(section.body) && <p>{pick(section.body)}</p>}
     </div>
@@ -166,12 +166,15 @@ function Workflow() {
 const RESPONSE_STORY_INTRO: LandingSectionBase = {
   enabled: true,
   order: 25,
-  eyebrow: { en: 'The magic moment', ar: 'اللحظة السحرية' },
+  eyebrow: { en: 'Reply drafts', ar: 'مسودات الردود' },
   title: {
-    en: 'One click turns a bad review into an on-brand reply',
-    ar: 'ضغطة واحدة تحوّل التقييم السلبي إلى رد بأسلوب علامتك',
+    en: 'Turn customer feedback into a reply draft that matches your business voice',
+    ar: 'حوّل ملاحظة العميل إلى مسودة رد تناسب نبرة منشأتك',
   },
-  body: { en: '', ar: '' },
+  body: {
+    en: 'Review and edit every draft before publishing—the final decision stays with your team.',
+    ar: 'راجع كل مسودة وعدّلها قبل النشر؛ ويبقى الاعتماد النهائي لدى فريقك.',
+  },
 };
 
 function ResponseStorySection() {
@@ -289,6 +292,7 @@ function PricingCard({ tier, yearly }: { tier: LandingTierSnapshot; yearly: bool
   const { pick, language, isArabic } = useSiteLanguage();
   const section = landing.content.pricing;
   const custom = pick(tier.customPriceLabel);
+  const free = tier.priceMonthly === 0 && tier.priceYearly === 0 && !custom;
   const monthlyEquivalent = tier.priceYearly > 0 ? tier.priceYearly / 12 : 0;
   const shownPrice = yearly && tier.priceYearly > 0 ? monthlyEquivalent : tier.priceMonthly;
   const formatter = new Intl.NumberFormat(language === 'ar' ? 'ar-SA' : 'en-US', { maximumFractionDigits: 0 });
@@ -302,11 +306,16 @@ function PricingCard({ tier, yearly }: { tier: LandingTierSnapshot; yearly: bool
         <span>
           {pick(tier.name)}
           {(pick(tier.badge) || tier.featured) && (
-            <span className="design-price-badge"><Star size={13} fill="currentColor" />{pick(tier.badge) || (isArabic ? 'الأكثر شيوعاً' : 'Most popular')}</span>
+            <span className="design-price-badge"><Star size={13} fill="currentColor" />{pick(tier.badge) || (isArabic ? 'للأعمال النامية' : 'Built for growth')}</span>
           )}
         </span>
-        {custom ? <strong className="design-price-custom">{custom}</strong> : (
+        {custom ? <strong className="design-price-custom">{custom}</strong> : free ? (
+          <strong className="design-price-free">{pick(section.freeLabel)}</strong>
+        ) : (
           <strong><b>{formatter.format(shownPrice)}</b> {tier.currency}<small>{pick(section.perMonthLabel)}</small></strong>
+        )}
+        {yearly && tier.priceYearly > 0 && (
+          <span className="design-price-billing-note">{formatter.format(tier.priceYearly)} {tier.currency} · {pick(section.billedYearlyLabel)}</span>
         )}
         <p>{pick(tier.description)}</p>
         {yearly && saving > 0 && <em>{pick(section.savingsLabel).replace('{percent}', String(saving))}</em>}
@@ -344,7 +353,7 @@ function Pricing() {
       <div className="design-blob design-blob--pricing" />
       <div className="site-container">
         <SectionIntro section={section} />
-        <div className="design-billing-toggle" role="group" aria-label={isArabic ? 'دورة الفوترة' : 'Billing cycle'}>
+        <div className="design-billing-toggle" role="group" aria-label={isArabic ? 'خيار الفوترة' : 'Billing option'}>
           <button type="button" className={cn(!yearly && 'is-active')} onClick={() => setYearly(false)}>{pick(section.monthlyLabel)}</button>
           <button type="button" className={cn(yearly && 'is-active')} onClick={() => setYearly(true)}>
             {pick(section.yearlyLabel)} <small>{pick(section.savingsLabel).replace('{percent}', '20')}</small>
@@ -357,7 +366,7 @@ function Pricing() {
             </div>
             {extended.length > 0 && (
               <div className="design-pricing-extended">
-                <h3>{isArabic ? 'خطط أخرى للمؤسسات وكبار الشركات' : 'Additional plans for enterprises and agencies'}</h3>
+                <h3>{isArabic ? 'حلول للمنشآت الكبرى والوكالات' : 'Solutions for enterprises and agencies'}</h3>
                 <div className={cn('design-pricing-grid design-pricing-grid--extended', extended.length === 1 && 'design-pricing-grid--single')}>
                   {extended.map((tier) => <PricingCard key={tier.id} tier={tier} yearly={yearly} />)}
                 </div>
@@ -367,8 +376,8 @@ function Pricing() {
         ) : (
           <div className="design-pricing-empty">
             <Sparkles size={28} />
-            <strong>{isArabic ? 'الباقات قيد الإعداد' : 'Plans are being prepared'}</strong>
-            <p>{isArabic ? 'ستظهر الباقات هنا فور نشرها من إدارة قرار.' : 'Plans will appear here as soon as Qrar administrators publish them.'}</p>
+            <strong>{isArabic ? 'نعمل على تجهيز الباقات' : 'We are preparing the plans'}</strong>
+            <p>{isArabic ? 'ستظهر الباقات هنا فور اعتمادها ونشرها.' : 'Plans will appear here once they are approved and published.'}</p>
           </div>
         )}
       </div>
@@ -376,27 +385,27 @@ function Pricing() {
   );
 }
 
-function Testimonials() {
+function UseCases() {
   const { landing } = usePublishedLanding();
   const { pick, isArabic } = useSiteLanguage();
   const section = landing.content.testimonials;
-  const cards = section.items.length > 0 ? [...section.items, ...section.items].slice(0, 6) : [];
+  const cards = section.items;
 
   return (
-    <section id="testimonials" className="design-section design-testimonials">
+    <section id="use-cases" className="design-section design-testimonials">
       <div className="site-container design-testimonial-grid">
         <div className="design-testimonial-copy">
           <span className="design-eyebrow">{pick(section.eyebrow)}</span>
           <h2>{pick(section.title)}</h2>
           <p>{pick(section.body)}</p>
-          <SiteAction link={{ label: { en: 'Start free — no credit card', ar: 'ابدأ مجاناً — لا يحتاج بطاقة ائتمان' }, kind: 'signup', value: '' }} className="design-button design-button--primary" />
+          <SiteAction link={{ label: { en: 'Start free', ar: 'ابدأ مجانًا' }, kind: 'signup', value: '' }} className="design-button design-button--primary" />
         </div>
-        <div className="design-testimonial-wall" aria-label={isArabic ? 'شهادات العملاء' : 'Customer testimonials'}>
+        <div className="design-testimonial-wall" aria-label={isArabic ? 'أمثلة استخدام قرار' : 'Qrar use cases'}>
           {cards.map((item, index) => (
             <figure key={`${item.id}-${index}`}>
-              <div className="design-stars">{Array.from({ length: 5 }).map((_, star) => <Star key={star} size={15} fill="currentColor" />)}</div>
-              <blockquote>“{pick(item.quote)}”</blockquote>
-              <figcaption><span><UserRound size={17} /></span><div><strong>{pick(item.name)}</strong><small>{pick(item.role)}</small></div></figcaption>
+              <span className="design-use-case-label">{pick(item.role)}</span>
+              <h3>{pick(item.name)}</h3>
+              <p>{pick(item.quote)}</p>
             </figure>
           ))}
         </div>
@@ -446,7 +455,7 @@ function FinalCall() {
               <SiteAction link={section.primaryCta} className="design-button design-button--primary" />
               <SiteAction link={section.secondaryCta} className="design-button design-button--soft" />
             </div>
-            <span className="design-credit-note"><WalletCards size={20} />{isArabic ? 'لا يحتاج بطاقة ائتمان — ابدأ في ثوانٍ' : 'No credit card required — start in seconds'}</span>
+            <span className="design-credit-note"><WalletCards size={20} />{isArabic ? 'ابدأ دون بطاقة ائتمانية' : 'Start without a credit card'}</span>
           </div>
           <ConsoleShowcase compact />
         </div>
@@ -471,7 +480,7 @@ export default function LandingPage() {
     { key: 'features', enabled: landing.content.features.enabled, order: landing.content.features.order, node: <Features /> },
     { key: 'audience', enabled: landing.content.audience.enabled, order: landing.content.audience.order, node: <Audience /> },
     { key: 'pricing', enabled: landing.content.pricing.enabled, order: landing.content.pricing.order, node: <Pricing /> },
-    { key: 'testimonials', enabled: landing.content.testimonials.enabled, order: landing.content.testimonials.order, node: <Testimonials /> },
+    { key: 'useCases', enabled: landing.content.testimonials.enabled, order: landing.content.testimonials.order, node: <UseCases /> },
     { key: 'najd', enabled: landing.content.najd.enabled, order: landing.content.najd.order, node: <Najd /> },
     { key: 'final', enabled: landing.content.finalCta.enabled, order: landing.content.finalCta.order, node: <FinalCall /> },
   ].filter((item) => item.enabled).sort((a, b) => a.order - b.order), [landing]);
@@ -481,8 +490,8 @@ export default function LandingPage() {
       {previewMode && (
         <div className="design-preview-banner">
           {source === 'preview'
-            ? (isArabic ? 'معاينة مسودة — غير منشورة' : 'Draft preview — not published')
-            : (isArabic ? 'بانتظار بيانات المعاينة من المنصة' : 'Waiting for preview data from Console')}
+            ? (isArabic ? 'معاينة لمسودة غير منشورة' : 'Preview of an unpublished draft')
+            : (isArabic ? 'بانتظار بيانات المعاينة من لوحة الإدارة' : 'Waiting for preview data from the admin dashboard')}
         </div>
       )}
       <div className={previewMode ? 'design-preview-offset' : undefined}>

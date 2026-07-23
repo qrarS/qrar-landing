@@ -34,9 +34,9 @@ export function SiteFooter() {
         <div className="design-footer-bottom">
           <p>{pick(footer.copyright).replace('{year}', String(new Date().getFullYear()))}</p>
           <div className="design-footer-social" aria-label={isArabic ? 'تابع قرار' : 'Follow Qrar'}>
-            <span>X / Twitter</span>
-            <span>LinkedIn</span>
-            <span>Instagram</span>
+            <span>{isArabic ? 'إكس (X)' : 'X'}</span>
+            <span>{isArabic ? 'لينكدإن' : 'LinkedIn'}</span>
+            <span>{isArabic ? 'إنستغرام' : 'Instagram'}</span>
           </div>
         </div>
       </div>

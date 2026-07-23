@@ -7,22 +7,22 @@ import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
 import { cn } from '@/lib/utils';
 
 const STR = {
-  name: { ar: 'مطعم الواحة البيضاء', en: 'White Oasis Restaurant' },
-  category: { ar: 'مطعم للأكلات السريعة', en: 'Fast food restaurant' },
-  address: { ar: '251 ب شارع المدينة المنوره ، الرياض', en: '251B Al Madinah Road, Riyadh' },
-  phone: '+966 53 814 4466',
-  googleChip: 'Google: 4.6',
-  starsChip: '(100 / 5,100) 4.7',
-  priceChip: '£200 – £400',
+  name: { ar: 'مقهى رِواق', en: 'Riwaq Café' },
+  category: { ar: 'مقهى سعودي', en: 'Saudi café' },
+  address: { ar: 'حي العليا، شارع التحلية، الرياض', en: 'Al Olaya, Tahlia Street, Riyadh' },
+  phone: '+966 11 000 0000',
+  googleChip: { ar: 'Google: ٤٫٦', en: 'Google: 4.6' },
+  starsChip: { ar: '٤٫٧ (٥٬١٠٠ تقييم)', en: '4.7 (5,100 reviews)' },
+  priceChip: { ar: '٢٠–٤٠ ر.س', en: 'SAR 20–40' },
   donutTitle: { ar: 'التقييم العام', en: 'Overall sentiment' },
-  donutSub: { ar: 'يعتمد على آراء العملاء آخر 3 شهور', en: 'Based on the last 3 months of reviews' },
-  donutCaption: { ar: 'تحسن بنسبة', en: 'improvement' },
-  legendPositive: { ar: 'ايجابي (19)', en: 'Positive (19)' },
-  legendNegative: { ar: 'سلبي (4)', en: 'Negative (4)' },
-  stop: { ar: 'ايقاف التحليل', en: 'Stop analysis' },
-  analyzing: { ar: 'جاري التحليل', en: 'Analyzing' },
-  progressSub: { ar: 'تحليل 8,540 من أصل 12,987', en: 'Analyzing 8,540 of 12,987' },
-  remaining: { ar: 'متبقي 4,447 تقييم', en: '4,447 reviews remaining' },
+  donutSub: { ar: 'استنادًا إلى تقييمات آخر ٣ أشهر', en: 'Based on the last 3 months of reviews' },
+  donutCaption: { ar: 'تحسّن', en: 'improvement' },
+  legendPositive: { ar: 'إيجابي (١٩)', en: 'Positive (19)' },
+  legendNegative: { ar: 'سلبي (٤)', en: 'Negative (4)' },
+  stop: { ar: 'إيقاف التحليل', en: 'Stop analysis' },
+  analyzing: { ar: 'جارٍ تحليل التقييمات', en: 'Analyzing reviews' },
+  progressSub: { ar: 'تم تحليل ٨٬٥٤٠ من ١٢٬٩٨٧', en: '8,540 of 12,987 reviews analyzed' },
+  remaining: { ar: 'متبقي ٤٬٤٤٧ تقييمًا', en: '4,447 reviews remaining' },
 };
 
 const POSITIVE = 'hsl(var(--positive))';
@@ -61,15 +61,15 @@ function PlaceCard({ className }: { className?: string }) {
         <h3 className="text-3xl sm:text-4xl font-bold text-foreground leading-snug">{pick(STR.name)}</h3>
         <div className="flex items-center justify-center gap-2.5 flex-wrap">
           <Pill className="text-amber-600 px-4 py-2">
-            <span className="text-sm font-semibold" dir="ltr">{STR.starsChip}</span>
+            <span className="text-sm font-semibold" dir="auto">{pick(STR.starsChip)}</span>
             <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
           </Pill>
           <Pill className="px-4 py-2">
-            <span className="text-sm font-semibold text-foreground" dir="ltr">{STR.googleChip}</span>
+            <span className="text-sm font-semibold text-foreground" dir="auto">{pick(STR.googleChip)}</span>
             <GoogleG className="h-4 w-4" />
           </Pill>
           <Pill className="px-4 py-2">
-            <span className="text-sm font-semibold text-primary" dir="ltr">{STR.priceChip}</span>
+            <span className="text-sm font-semibold text-primary" dir="auto">{pick(STR.priceChip)}</span>
           </Pill>
         </div>
         <div className="space-y-2.5 pt-1">
@@ -186,7 +186,7 @@ export function ConsoleShowcase({ compact = false }: { compact?: boolean }) {
     <div
       className={cn('console-artwork console-showcase', compact && 'console-artwork--compact')}
       role="img"
-      aria-label={isArabic ? 'معاينة منصة قرار لتحليل تقييمات العملاء' : 'Qrar customer-review analysis preview'}
+      aria-label={isArabic ? 'عرض توضيحي لمنصة قرار لتحليل تقييمات العملاء' : 'Qrar customer-review analysis demonstration'}
     >
       <div className="console-artwork-glow" />
       <div className="console-showcase-canvas">

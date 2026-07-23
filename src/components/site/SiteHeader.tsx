@@ -29,7 +29,7 @@ export function SiteHeader() {
     <header className={cn('design-header', (scrolled || open) && 'design-header--solid')}>
       <div className="site-container">
         <nav className="design-header-nav" aria-label={isArabic ? 'التنقل الرئيسي' : 'Main navigation'}>
-          <a className="design-header-logo" href="/" aria-label={isArabic ? 'قرار - الصفحة الرئيسية' : 'Qrar home'}>
+          <a className="design-header-logo" href="/" aria-label={isArabic ? 'قرار — الصفحة الرئيسية' : 'Qrar home'}>
             <SiteLogo />
           </a>
 
@@ -49,7 +49,7 @@ export function SiteHeader() {
           </ul>
 
           <div className="design-header-actions">
-            <button type="button" className="design-language-button" onClick={toggleLanguage} aria-label={isArabic ? 'Switch to English' : 'التبديل إلى العربية'}>
+            <button type="button" className="design-language-button" onClick={toggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
               <Globe2 size={18} />
               <span>{language === 'ar' ? 'EN' : 'ع'}</span>
             </button>
@@ -64,10 +64,15 @@ export function SiteHeader() {
           </div>
 
           <div className="design-header-mobile-actions">
-            <button type="button" onClick={toggleLanguage} aria-label={isArabic ? 'Switch to English' : 'التبديل إلى العربية'}>
+            <button type="button" onClick={toggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
               {language === 'ar' ? 'EN' : 'ع'}
             </button>
-            <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={isArabic ? 'فتح القائمة' : 'Open menu'}>
+            <button
+              type="button"
+              onClick={() => setOpen((value) => !value)}
+              aria-expanded={open}
+              aria-label={isArabic ? (open ? 'إغلاق القائمة' : 'فتح القائمة') : (open ? 'Close menu' : 'Open menu')}
+            >
               {open ? <X size={21} /> : <Menu size={21} />}
             </button>
           </div>

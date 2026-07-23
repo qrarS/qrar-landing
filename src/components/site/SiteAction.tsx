@@ -35,8 +35,8 @@ export function SiteAction({ link, className, disabledClassName, children, onCli
         className={cn(className, disabledClassName, 'cursor-not-allowed opacity-60')}
         aria-disabled
         title={link.kind === 'signup'
-          ? (isArabic ? 'التسجيل مغلق حالياً' : 'Sign-up is currently closed')
-          : (isArabic ? 'قريباً' : 'Coming soon')}
+          ? (isArabic ? 'التسجيل غير متاح حاليًا' : 'Sign-up is currently unavailable')
+          : (isArabic ? 'متاح قريبًا' : 'Available soon')}
       >
         {label}
       </span>
