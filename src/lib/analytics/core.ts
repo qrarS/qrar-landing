@@ -38,7 +38,7 @@ export interface CoreStatus {
   location: PageFields | null;
 }
 
-const BUFFER_MAX = 50;
+const BUFFER_MAX = 100;
 
 export interface AnalyticsCore {
   track(name: EventName, params: Record<string, unknown>): Disposition;
@@ -54,6 +54,12 @@ export interface AnalyticsCore {
 export function createCore(
   dispatcher: (name: string, params: Record<string, ParamValue>) => void,
   now: () => number = () => Date.now(),
+  /**
+   * Optional analysis-context provider (console only): its value is merged
+   * into every event as `analysis_context` so journeys are segmentable by
+   * analysis type. When absent (landing site), the param is omitted entirely.
+   */
+  contextProvider?: () => string,
 ): AnalyticsCore {
   const state: CoreStatus = {
     configured: false,
@@ -74,10 +80,19 @@ export function createCore(
     track(name, params) {
       if (!(name in REGISTRY)) return record(String(name), {}, 'dropped_invalid');
       const scrubbed = scrubEventParams(name, params ?? {});
+      let context: Record<string, ParamValue> = {};
+      if (contextProvider) {
+        try {
+          context = { analysis_context: contextProvider() };
+        } catch {
+          context = {};
+        }
+      }
       const merged: Record<string, ParamValue> = {
         ...scrubbed,
-        ...(state.location ?? {}),
+        ...state.location ?? {},
         ...(state.internal ? { traffic_type: 'internal' } : {}),
+        ...context,
       };
       if (!state.configured || state.hardDisabled) return record(name, merged, 'dropped_disabled');
       if (state.consent !== 'granted') return record(name, merged, 'dropped_consent');

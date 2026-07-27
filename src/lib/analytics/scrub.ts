@@ -16,7 +16,10 @@ export const INVALID_ENUM = '_invalid';
 const MAX_STRING = 100;
 const EMAIL_RE = /\S+@\S+/;
 const URL_RE = /(https?:\/\/|www\.)/i;
-const TOKEN_RUN_RE = /[A-Za-z0-9_-]{20,}/;
+// No underscore in the class: our own snake_case ids are underscore-joined
+// SHORT segments (reviews_queue_toggle) and must pass, while real secrets
+// (hex/base64/UUID/JWT) are unbroken runs of 20+ word chars or hyphens.
+const TOKEN_RUN_RE = /[A-Za-z0-9-]{20,}/;
 
 export function scrubString(value: string): string {
   const v = value.slice(0, MAX_STRING);

@@ -37,10 +37,18 @@ describe('core gating (landing)', () => {
     expect(dispatched[1].params.section_id).toBe('_invalid');
   });
 
-  it('unknown events are rejected and the buffer caps at 50', () => {
+  it('unknown events are rejected and the buffer caps at 100', () => {
     const { core } = setup();
     expect(core.track('nope' as never, {})).toBe('dropped_invalid');
-    for (let i = 0; i < 80; i++) core.track('consent_update', { status: 'granted' });
-    expect(core.getBuffer()).toHaveLength(50);
+    for (let i = 0; i < 150; i++) core.track('consent_update', { status: 'granted' });
+    expect(core.getBuffer()).toHaveLength(100);
+  });
+
+  it('analysis_context is absent on landing events (no provider is wired)', () => {
+    const { core } = setup();
+    core.setConfigured(true);
+    core.setConsent('granted');
+    core.track('consent_update', { status: 'granted' });
+    expect(core.getBuffer()[0].params).not.toHaveProperty('analysis_context');
   });
 });
