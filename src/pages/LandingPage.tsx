@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -40,6 +40,7 @@ import { SiteHeader } from '@/components/site/SiteHeader';
 import type { LandingLink, LandingSectionBase, LandingTierSnapshot } from '@/content/landing';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
+import { analytics, toSnakeCase } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
 const icons: Record<string, LucideIcon> = {
@@ -110,11 +111,11 @@ function Hero() {
           </h1>
           <p>{pick(hero.body)}</p>
           <div className="design-actions">
-            <SiteAction link={hero.primaryCta} className="design-button design-button--primary">
+            <SiteAction link={hero.primaryCta} source="hero" className="design-button design-button--primary">
               <span>{pick(hero.primaryCta.label)}</span>
               <Arrow size={19} />
             </SiteAction>
-            <SiteAction link={hero.secondaryCta} className="design-button design-button--soft" />
+            <SiteAction link={hero.secondaryCta} source="hero" className="design-button design-button--soft" />
           </div>
           <div className="design-stats">
             {hero.stats.map((stat, index) => {
@@ -327,6 +328,8 @@ function PricingCard({ tier, yearly }: { tier: LandingTierSnapshot; yearly: bool
       </ul>
       <SiteAction
         link={tierAction(tier)}
+        source="pricing"
+        tierId={tier.id}
         className={cn('design-price-action', tier.featured && 'design-price-action--featured')}
       />
     </article>
@@ -398,7 +401,7 @@ function UseCases() {
           <span className="design-eyebrow">{pick(section.eyebrow)}</span>
           <h2>{pick(section.title)}</h2>
           <p>{pick(section.body)}</p>
-          <SiteAction link={{ label: { en: 'Start free', ar: 'ابدأ مجانًا' }, kind: 'signup', value: '' }} className="design-button design-button--primary" />
+          <SiteAction link={{ label: { en: 'Start free', ar: 'ابدأ مجانًا' }, kind: 'signup', value: '' }} source="use_cases" className="design-button design-button--primary" />
         </div>
         <div className="design-testimonial-wall" aria-label={isArabic ? 'أمثلة استخدام قرار' : 'Qrar use cases'}>
           {cards.map((item, index) => (
@@ -431,7 +434,7 @@ function Najd() {
         <div className="design-najd-prompts">
           {section.bullets.map((bullet, index) => <span key={index}>{pick(bullet)}</span>)}
         </div>
-        <SiteAction link={section.cta} className="design-button design-button--primary"><Mic2 size={18} /><span>{pick(section.cta.label)}</span></SiteAction>
+        <SiteAction link={section.cta} source="najd" className="design-button design-button--primary"><Mic2 size={18} /><span>{pick(section.cta.label)}</span></SiteAction>
       </div>
     </section>
   );
@@ -452,8 +455,8 @@ function FinalCall() {
             <h2>{pick(section.title)}</h2>
             <p>{pick(section.body)}</p>
             <div className="design-actions">
-              <SiteAction link={section.primaryCta} className="design-button design-button--primary" />
-              <SiteAction link={section.secondaryCta} className="design-button design-button--soft" />
+              <SiteAction link={section.primaryCta} source="final_cta" className="design-button design-button--primary" />
+              <SiteAction link={section.secondaryCta} source="final_cta" className="design-button design-button--soft" />
             </div>
             <span className="design-credit-note"><WalletCards size={20} />{isArabic ? 'ابدأ دون بطاقة ائتمانية' : 'Start without a credit card'}</span>
           </div>
@@ -464,6 +467,20 @@ function FinalCall() {
   );
 }
 
+// Analytics section ids: the sections' DOM anchor ids, snake_cased (matches
+// the section_view enum in src/lib/analytics/registry.ts).
+const ANALYTICS_SECTION_IDS: Record<string, string> = {
+  hero: 'top',
+  workflow: 'how_it_works',
+  responseStory: 'response_story',
+  features: 'features',
+  audience: 'audience',
+  pricing: 'pricing',
+  useCases: 'use_cases',
+  najd: 'najd',
+  final: 'start',
+};
+
 export default function LandingPage() {
   const { landing, source, previewMode } = usePublishedLanding();
   const { language, pick, isArabic } = useSiteLanguage();
@@ -472,6 +489,45 @@ export default function LandingPage() {
     document.title = pick(landing.content.seo.title);
     document.querySelector('meta[name="description"]')?.setAttribute('content', pick(landing.content.seo.description));
   }, [landing.content.seo, language, pick]);
+
+  // section_view: once per section per page load, after a short dwell so
+  // smooth-scrolling past intermediate sections doesn't count them. `seen`
+  // lives in a ref because the observer re-creates whenever the CMS content
+  // settles (landing changes) — the once-per-load guarantee must survive that.
+  const sectionRefs = useRef(new Map<string, HTMLDivElement>());
+  const seenSectionsRef = useRef(new Set<string>());
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const seen = seenSectionsRef.current;
+    const timers = new Map<string, ReturnType<typeof setTimeout>>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const id = (entry.target as HTMLElement).dataset.analyticsSection || '';
+        if (!id || seen.has(id)) continue;
+        if (entry.isIntersecting) {
+          if (!timers.has(id)) {
+            timers.set(id, setTimeout(() => {
+              timers.delete(id);
+              if (seen.has(id)) return;
+              seen.add(id);
+              analytics.track('section_view', { section_id: id as never });
+            }, 300));
+          }
+        } else {
+          const pending = timers.get(id);
+          if (pending) {
+            clearTimeout(pending);
+            timers.delete(id);
+          }
+        }
+      }
+    }, { threshold: 0.25 });
+    for (const el of sectionRefs.current.values()) observer.observe(el);
+    return () => {
+      observer.disconnect();
+      for (const t of timers.values()) clearTimeout(t);
+    };
+  }, [/* re-observe when the CMS-driven section list changes */ landing]);
 
   const sections = useMemo<Array<{ key: string; enabled: boolean; order: number; node: ReactNode }>>(() => [
     { key: 'hero', enabled: landing.content.hero.enabled, order: landing.content.hero.order, node: <Hero /> },
@@ -496,7 +552,18 @@ export default function LandingPage() {
       )}
       <div className={previewMode ? 'design-preview-offset' : undefined}>
         <SiteHeader />
-        <main>{sections.map((section) => <div key={section.key}>{section.node}</div>)}</main>
+        <main>{sections.map((section) => (
+          <div
+            key={section.key}
+            data-analytics-section={ANALYTICS_SECTION_IDS[section.key] ?? toSnakeCase(section.key)}
+            ref={(el) => {
+              if (el) sectionRefs.current.set(section.key, el);
+              else sectionRefs.current.delete(section.key);
+            }}
+          >
+            {section.node}
+          </div>
+        ))}</main>
         <SiteFooter />
       </div>
     </div>

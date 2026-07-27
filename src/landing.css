@@ -2469,3 +2469,60 @@
   .response-story-step-num { background: var(--qrar-soft) !important; color: var(--qrar-purple) !important; }
   .response-story-step-num--last { background: var(--qrar-purple) !important; color: #fff !important; }
 }
+
+/* ── Analytics consent banner + internal-traffic chip ─────────────────────
+   Fixed bottom bar above the header (60) and CMS preview banner (100).
+   Surface/blur mirror .design-header--solid so it reads as native chrome. */
+.qrar-consent-banner {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 110;
+  border-top: 1px solid rgb(63 29 86 / 7%);
+  background: rgb(253 251 251 / 92%);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 -14px 45px -38px rgb(37 19 61 / 72%);
+  padding-block: 14px;
+}
+.qrar-consent-banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+.qrar-consent-banner__text {
+  margin: 0;
+  flex: 1 1 320px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--qrar-ink);
+}
+.qrar-consent-banner__link {
+  color: var(--qrar-purple);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.qrar-consent-banner__actions {
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.qrar-consent-banner__button {
+  min-height: 40px;
+  padding: 8px 20px;
+  font-size: 14px;
+}
+.qrar-internal-chip {
+  position: fixed;
+  inset-block-end: 8px;
+  inset-inline-start: 8px;
+  z-index: 111;
+  pointer-events: none;
+  border: 1px solid rgb(63 29 86 / 12%);
+  border-radius: 999px;
+  background: rgb(243 228 252 / 92%);
+  color: var(--qrar-ink);
+  font-size: 11px;
+  line-height: 1;
+  padding: 6px 10px;
+  box-shadow: 0 6px 20px -14px rgb(37 19 61 / 60%);
+}

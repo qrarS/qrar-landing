@@ -5,6 +5,7 @@ import { SiteLogo } from './SiteLogo';
 import { SiteAction } from './SiteAction';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
+import { analytics } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
 export function SiteHeader() {
@@ -25,6 +26,11 @@ export function SiteHeader() {
   const signUp = { label: landing.content.navigation.signUpLabel, kind: 'signup' as const, value: '' };
   const Arrow = isArabic ? ArrowUpLeft : ArrowUpRight;
 
+  const handleToggleLanguage = () => {
+    analytics.track('language_change', { app_language: isArabic ? 'en' : 'ar', change_source: 'header' });
+    toggleLanguage();
+  };
+
   return (
     <header className={cn('design-header', (scrolled || open) && 'design-header--solid')}>
       <div className="site-container">
@@ -38,6 +44,7 @@ export function SiteHeader() {
               <li key={`${link.kind}-${index}`}>
                 <SiteAction
                   link={link}
+                  source="header"
                   className={cn(
                     ((location.pathname === '/' && index === 0)
                       || (link.kind === 'route' && link.value === location.pathname))
@@ -49,22 +56,22 @@ export function SiteHeader() {
           </ul>
 
           <div className="design-header-actions">
-            <button type="button" className="design-language-button" onClick={toggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
+            <button type="button" className="design-language-button" onClick={handleToggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
               <Globe2 size={18} />
               <span>{language === 'ar' ? 'EN' : 'ع'}</span>
             </button>
-            <SiteAction link={signIn} className="design-header-signin">
+            <SiteAction link={signIn} source="header" className="design-header-signin">
               <UserRound size={19} />
               <span>{pick(signIn.label)}</span>
             </SiteAction>
-            <SiteAction link={signUp} className="design-header-signup">
+            <SiteAction link={signUp} source="header" className="design-header-signup">
               <span>{pick(signUp.label)}</span>
               <Arrow size={18} />
             </SiteAction>
           </div>
 
           <div className="design-header-mobile-actions">
-            <button type="button" onClick={toggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
+            <button type="button" onClick={handleToggleLanguage} aria-label={isArabic ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic'}>
               {language === 'ar' ? 'EN' : 'ع'}
             </button>
             <button
@@ -82,12 +89,12 @@ export function SiteHeader() {
           <div className="design-mobile-menu">
             <ul>
               {landing.content.navigation.links.map((link, index) => (
-                <li key={index}><SiteAction link={link} onClick={() => setOpen(false)} /></li>
+                <li key={index}><SiteAction link={link} source="header_mobile" onClick={() => setOpen(false)} /></li>
               ))}
             </ul>
             <div>
-              <SiteAction link={signIn} className="design-header-signin" />
-              <SiteAction link={signUp} className="design-header-signup" />
+              <SiteAction link={signIn} source="header_mobile" className="design-header-signin" />
+              <SiteAction link={signUp} source="header_mobile" className="design-header-signup" />
             </div>
           </div>
         )}

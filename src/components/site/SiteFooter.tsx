@@ -23,7 +23,7 @@ export function SiteFooter() {
                 <ul>
                   {column.links.map((link, index) => (
                     <li key={index}>
-                      <SiteAction link={link} disabledClassName="design-footer-placeholder" />
+                      <SiteAction link={link} source="footer" disabledClassName="design-footer-placeholder" />
                     </li>
                   ))}
                 </ul>

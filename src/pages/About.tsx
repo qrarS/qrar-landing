@@ -114,11 +114,11 @@ export default function About() {
                   <h2>{pick(about.finalCta.title)}</h2>
                   <p>{pick(about.finalCta.body)}</p>
                   <div className="design-actions">
-                    <SiteAction link={about.finalCta.primaryCta} className="design-button design-button--primary">
+                    <SiteAction link={about.finalCta.primaryCta} source="about" className="design-button design-button--primary">
                       <span>{pick(about.finalCta.primaryCta.label)}</span>
                       <Arrow size={18} />
                     </SiteAction>
-                    <SiteAction link={about.finalCta.secondaryCta} className="design-button design-button--soft" />
+                    <SiteAction link={about.finalCta.secondaryCta} source="about" className="design-button design-button--soft" />
                   </div>
                 </div>
                 <div className="about-final-art" aria-hidden="true">

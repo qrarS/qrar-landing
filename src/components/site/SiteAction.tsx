@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { LandingLink } from '@/content/landing';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
+import { analytics, toErrorCategory } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
 function hrefFor(link: LandingLink, auth: { signupUrl: string; signinUrl: string }): string | null {
@@ -16,12 +17,18 @@ function hrefFor(link: LandingLink, auth: { signupUrl: string; signinUrl: string
   }
 }
 
-export function SiteAction({ link, className, disabledClassName, children, onClick }: {
+type CtaSource = 'header' | 'header_mobile' | 'footer' | 'hero' | 'pricing' | 'use_cases' | 'najd' | 'final_cta' | 'about';
+
+export function SiteAction({ link, className, disabledClassName, children, onClick, source, tierId }: {
   link: LandingLink;
   className?: string;
   disabledClassName?: string;
   children?: ReactNode;
   onClick?: () => void;
+  /** Analytics: which surface rendered this CTA (cta_click.source). */
+  source?: CtaSource;
+  /** Analytics: pricing tier id for per-tier CTAs. */
+  tierId?: string;
 }) {
   const { landing } = usePublishedLanding();
   const { pick, isArabic } = useSiteLanguage();
@@ -44,11 +51,23 @@ export function SiteAction({ link, className, disabledClassName, children, onCli
   }
 
   const external = link.kind === 'external';
+  const handleClick = () => {
+    // Every console CTA in the app renders through here — the cta_click
+    // choke point (gtag delivers via beacon, safe across same-tab navigation).
+    if (source && link.kind !== 'placeholder') {
+      analytics.track('cta_click', {
+        cta_kind: link.kind,
+        source,
+        tier_id: tierId ? toErrorCategory(tierId) : 'none',
+      });
+    }
+    onClick?.();
+  };
   return (
     <a
       href={href}
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
     >

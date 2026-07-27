@@ -1,6 +1,6 @@
 import LegalPage, { type LegalSection } from "@/components/site/SiteLegalPage";
 
-const EFFECTIVE_DATE = "April 27, 2026";
+const EFFECTIVE_DATE = "July 27, 2026";
 
 const sections: LegalSection[] = [
   {
@@ -272,7 +272,7 @@ const sections: LegalSection[] = [
         <ul>
           <li>Google Business Profile API (Google LLC).</li>
           <li>Cloud hosting providers.</li>
-          <li>Analytics tools (where used).</li>
+          <li>Google Analytics (Google LLC) — see the Cookies &amp; Analytics section below.</li>
           <li>
             Each third party operates under its own privacy policy, which we
             encourage you to review.
@@ -283,9 +283,66 @@ const sections: LegalSection[] = [
         <ul>
           <li>واجهة Google Business Profile API (شركة Google LLC).</li>
           <li>مزوّدو الاستضافة السحابية.</li>
-          <li>أدوات التحليلات (عند استخدامها).</li>
+          <li>تحليلات Google (شركة Google LLC) — راجع قسم ملفات تعريف الارتباط والتحليلات أدناه.</li>
           <li>
             يعمل كل طرف ثالث وفق سياسة خصوصيته الخاصة، وننصحك بمراجعتها.
+          </li>
+        </ul>
+      ),
+    },
+  },
+  {
+    id: "cookies-analytics",
+    title: { en: "Cookies & Analytics", ar: "ملفات تعريف الارتباط والتحليلات" },
+    body: {
+      en: (
+        <ul>
+          <li>
+            <strong>Analytics cookies (optional):</strong> with your consent, we use
+            Google Analytics to understand how qrar.ai and console.qrar.ai are used —
+            pages visited, features used, and where visitors come from. Nothing is
+            collected before you choose "Accept" on the consent banner.
+          </li>
+          <li>
+            <strong>What we never send:</strong> no names, emails, phone numbers,
+            passwords, review content, or anything you type. Web addresses are
+            stripped of identifiers before any measurement is recorded.
+          </li>
+          <li>
+            <strong>Cookies used:</strong> <strong>qrar_consent</strong> remembers your
+            choice, and Google's <strong>_ga</strong> cookies distinguish visits. Both
+            are set for the qrar.ai domain, so one choice covers the website and the
+            console together.
+          </li>
+          <li>
+            <strong>Your choice:</strong> declining (or doing nothing) keeps analytics
+            fully off. You can withdraw consent at any time by clearing this site's
+            cookies in your browser — the banner will ask again.
+          </li>
+        </ul>
+      ),
+      ar: (
+        <ul>
+          <li>
+            <strong>ملفات تعريف ارتباط تحليلية (اختيارية):</strong> بموافقتك، نستخدم
+            تحليلات Google لفهم كيفية استخدام qrar.ai وconsole.qrar.ai — الصفحات
+            المزارة والميزات المستخدمة ومصادر الزيارات. لا نجمع أي شيء قبل اختيارك
+            «موافق» في شريط الموافقة.
+          </li>
+          <li>
+            <strong>ما لا نرسله أبداً:</strong> لا أسماء ولا بريداً إلكترونياً ولا أرقام
+            جوال ولا كلمات مرور ولا محتوى مراجعات ولا أي شيء تكتبه. وتُجرَّد عناوين
+            الصفحات من أي مُعرِّفات قبل تسجيل أي قياس.
+          </li>
+          <li>
+            <strong>الملفات المستخدمة:</strong> يحفظ <strong>qrar_consent</strong>{" "}
+            اختيارك، وتميّز ملفات <strong>_ga</strong> من Google الزيارات. يُضبط
+            كلاهما على نطاق qrar.ai، فيغطي اختيار واحد الموقع ولوحة التحكم معاً.
+          </li>
+          <li>
+            <strong>خيارك بيدك:</strong> الرفض (أو عدم الاختيار) يبقي التحليلات
+            متوقفة تماماً. ويمكنك سحب موافقتك في أي وقت بمسح ملفات تعريف الارتباط
+            لهذا الموقع من متصفحك — وسيسألك الشريط مجدداً.
           </li>
         </ul>
       ),

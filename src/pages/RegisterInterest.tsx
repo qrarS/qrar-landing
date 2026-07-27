@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import { SiteLogo } from '@/components/site/SiteLogo';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
+import { analytics } from '@/lib/analytics';
 
 // Standalone lead-capture page (qrar.ai/interests) built to match the
 // "سجل اهتمامك Qrar" design mockup. Self-contained styling on purpose —
@@ -103,6 +104,14 @@ export default function RegisterInterest() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [error, setError] = useState<string | null>(null);
 
+  // Telemetry is category-only: field VALUES are never sent (phone is PII).
+  const engagedRef = useRef(false);
+  const trackEngage = () => {
+    if (engagedRef.current) return;
+    engagedRef.current = true;
+    analytics.track('interest_form_engage', {});
+  };
+
   const diamonds = useMemo(makeDiamonds, []);
   const diamondRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -148,19 +157,23 @@ export default function RegisterInterest() {
 
     const branchesCount = Number.parseInt(branches, 10);
     if (!name.trim() || !biz.trim() || !branches.trim() || !phone.trim()) {
+      analytics.track('interest_form_fail', { error_category: 'required' });
       setError(t.errorRequired);
       return;
     }
     if (!Number.isInteger(branchesCount) || branchesCount < 1) {
+      analytics.track('interest_form_fail', { error_category: 'invalid_branches' });
       setError(t.errorBranches);
       return;
     }
     if (!/^\+?[0-9\s\-()]{5,31}$/.test(phone.trim())) {
+      analytics.track('interest_form_fail', { error_category: 'invalid_phone' });
       setError(t.errorPhone);
       return;
     }
 
     setStatus('submitting');
+    let httpFailed = false;
     try {
       const response = await fetch(INTEREST_ENDPOINT, {
         method: 'POST',
@@ -174,9 +187,14 @@ export default function RegisterInterest() {
           website,
         }),
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) {
+        httpFailed = true;
+        throw new Error(`HTTP ${response.status}`);
+      }
+      analytics.track('interest_form_complete', { branch_count: branchesCount });
       setStatus('success');
     } catch {
+      analytics.track('interest_form_fail', { error_category: httpFailed ? 'http_error' : 'network' });
       setStatus('idle');
       setError(t.errorSubmit);
     }
@@ -253,7 +271,10 @@ export default function RegisterInterest() {
           <SiteLogo className="h-11" />
           <button
             type="button"
-            onClick={toggleLanguage}
+            onClick={() => {
+              analytics.track('language_change', { app_language: isArabic ? 'en' : 'ar', change_source: 'interests' });
+              toggleLanguage();
+            }}
             className="qr-lang"
             style={{
               display: 'flex', alignItems: 'center', gap: 8,
@@ -287,19 +308,19 @@ export default function RegisterInterest() {
             <form onSubmit={onSubmit} style={{ width: '100%', maxWidth: 480, background: 'rgba(255,255,255,.85)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,.9)', borderRadius: 26, boxShadow: '0 30px 70px -30px rgba(46,26,71,.4)', padding: '34px clamp(24px,4vw,38px)', display: 'flex', flexDirection: 'column', gap: 20, animation: 'qrRise .6s .1s ease both' }}>
               <div style={fieldStyle}>
                 <label style={labelStyle}>{t.nameLabel}</label>
-                <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t.namePh} maxLength={120} style={inputStyle} />
+                <input value={name} onChange={(e) => { trackEngage(); setName(e.target.value); }} placeholder={t.namePh} maxLength={120} style={inputStyle} />
               </div>
               <div style={fieldStyle}>
                 <label style={labelStyle}>{t.bizLabel}</label>
-                <input value={biz} onChange={(e) => setBiz(e.target.value)} placeholder={t.bizPh} maxLength={160} style={inputStyle} />
+                <input value={biz} onChange={(e) => { trackEngage(); setBiz(e.target.value); }} placeholder={t.bizPh} maxLength={160} style={inputStyle} />
               </div>
               <div style={fieldStyle}>
                 <label style={labelStyle}>{t.branchLabel}</label>
-                <input value={branches} onChange={(e) => setBranches(e.target.value)} type="number" min={1} placeholder={t.branchPh} style={inputStyle} />
+                <input value={branches} onChange={(e) => { trackEngage(); setBranches(e.target.value); }} type="number" min={1} placeholder={t.branchPh} style={inputStyle} />
               </div>
               <div style={fieldStyle}>
                 <label style={labelStyle}>{t.phoneLabel}</label>
-                <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder={t.phonePh} maxLength={32} style={{ ...inputStyle, direction: 'ltr', textAlign: isArabic ? 'right' : 'left' }} />
+                <input value={phone} onChange={(e) => { trackEngage(); setPhone(e.target.value); }} type="tel" placeholder={t.phonePh} maxLength={32} style={{ ...inputStyle, direction: 'ltr', textAlign: isArabic ? 'right' : 'left' }} />
               </div>
 
               <input
