@@ -60,13 +60,25 @@ export function ensureStub(): void {
   }
 }
 
-export function boot(measurementId: string, options: { debug: boolean }): void {
+export function boot(
+  measurementId: string,
+  options: {
+    debug: boolean;
+    /** Sanitized page fields, seeded BEFORE config: gtag's automatic hits
+     *  (session_start, enhanced-measurement events) fire with the current
+     *  document.location otherwise — which can carry auth tokens on
+     *  /auth/confirm. Never boot without them. */
+    pageFields: { page_location: string; page_referrer: string; page_title: string };
+  },
+): void {
   if (booted || typeof window === 'undefined') return;
   ensureStub();
   gtag('consent', 'update', { analytics_storage: 'granted' });
+  gtag('set', options.pageFields);
   gtag('js', new Date());
   gtag('config', measurementId, {
     send_page_view: false,
+    ...options.pageFields,
     ...(options.debug ? { debug_mode: true } : {}),
   });
   try {

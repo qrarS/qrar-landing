@@ -18,6 +18,7 @@
  */
 import { createCore, type PageFields } from './core';
 import * as loader from './gtagLoader';
+import { sanitizeLocation, sanitizeReferrer } from './sanitizeUrl';
 import { buildConsentCookie, parseConsentCookie, type ConsentStatus } from './consent';
 import { buildInternalCookie, parseInternalCookie } from './internal';
 import { type EventName, type EventParams } from './registry';
@@ -75,9 +76,19 @@ const notify = (): void => {
   }
 };
 
+const currentSanitizedFields = (): PageFields => {
+  const origin = window.location.origin;
+  const loc = sanitizeLocation(origin, window.location.pathname, window.location.search);
+  return {
+    page_location: loc.url,
+    page_referrer: sanitizeReferrer(origin, document.referrer),
+    page_title: loc.label,
+  };
+};
+
 const bootIfEligible = (): void => {
-  if (configured && !hardDisabled && core.status().consent === 'granted') {
-    loader.boot(MEASUREMENT_ID, { debug: debugEnabled });
+  if (configured && !hardDisabled && core.status().consent === 'granted' && isBrowser) {
+    loader.boot(MEASUREMENT_ID, { debug: debugEnabled, pageFields: currentSanitizedFields() });
   }
 };
 
