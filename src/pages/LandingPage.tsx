@@ -37,7 +37,7 @@ import { ResponseStory } from '@/components/site/ResponseStory';
 import { SiteAction } from '@/components/site/SiteAction';
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
-import type { LandingLink, LandingSectionBase, LandingTierSnapshot } from '@/content/landing';
+import { DEFAULT_CUSTOMER_DISPLAY, type LandingLink, type LandingSectionBase, type LandingTierSnapshot } from '@/content/landing';
 import { usePublishedLanding } from '@/contexts/LandingContentContext';
 import { useSiteLanguage } from '@/contexts/SiteLanguageContext';
 import { analytics, toSnakeCase } from '@/lib/analytics';
@@ -171,13 +171,24 @@ function Customers() {
     </div>
   );
 
+  const display = { ...DEFAULT_CUSTOMER_DISPLAY, ...section.display };
+
   return (
-    <section id="customers" className="design-section design-customers">
+    <section
+      id="customers"
+      className={cn('design-section design-customers', display.blendWhiteBackgrounds && 'design-customers--blend')}
+      style={{
+        '--customers-count': sequence.length,
+        '--customers-logo-h': `${display.logoHeight}px`,
+        '--customers-gap': `${display.gap}px`,
+        '--customers-pace': `${display.secondsPerLogo}s`,
+      } as CSSProperties}
+    >
       <div className="site-container">
         {pick(section.title) && <h2 className="design-customers-heading">{pick(section.title)}</h2>}
       </div>
       <div className="design-customers-viewport">
-        <div className="design-customers-strip" style={{ '--customers-count': sequence.length } as CSSProperties}>
+        <div className="design-customers-strip">
           {renderHalf(false)}
           {renderHalf(true)}
         </div>

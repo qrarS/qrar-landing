@@ -61,6 +61,22 @@ export interface LandingCustomer {
   logoUrl: string;
 }
 
+// Optional per-section presentation knobs for the customers marquee. Absent on
+// older documents — consumers must spread DEFAULT_CUSTOMER_DISPLAY underneath.
+export interface LandingCustomersDisplay {
+  logoHeight: number;
+  gap: number;
+  secondsPerLogo: number;
+  blendWhiteBackgrounds: boolean;
+}
+
+export const DEFAULT_CUSTOMER_DISPLAY: LandingCustomersDisplay = {
+  logoHeight: 44,
+  gap: 44,
+  secondsPerLogo: 2.5,
+  blendWhiteBackgrounds: true,
+};
+
 export interface LandingAboutContent {
   seo: {
     title: LocalizedText;
@@ -113,6 +129,7 @@ export interface LandingPageContent {
   };
   customers: LandingSectionBase & {
     items: LandingCustomer[];
+    display?: LandingCustomersDisplay;
   };
   workflow: LandingSectionBase & {
     steps: LandingCard[];
@@ -423,6 +440,7 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
     title: bi('Trusted by leading businesses', 'موثوق من قِبل منشآت رائدة'),
     body: bi('', ''),
     items: [],
+    display: { ...DEFAULT_CUSTOMER_DISPLAY },
   },
   workflow: {
     enabled: true, order: 20,
@@ -796,6 +814,16 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
         if (typeof item.logoUrl !== 'string' || item.logoUrl.length > 2048) errors.push(`customers.items[${index}].logoUrl is invalid`);
       }
     });
+    const display = value.customers.display;
+    if (display !== undefined) {
+      if (!isObject(display)) errors.push('customers.display is invalid');
+      else {
+        if (!Number.isFinite(display.logoHeight) || Number(display.logoHeight) < 16 || Number(display.logoHeight) > 160) errors.push('customers.display.logoHeight is invalid');
+        if (!Number.isFinite(display.gap) || Number(display.gap) < 0 || Number(display.gap) > 200) errors.push('customers.display.gap is invalid');
+        if (!Number.isFinite(display.secondsPerLogo) || Number(display.secondsPerLogo) < 0.5 || Number(display.secondsPerLogo) > 20) errors.push('customers.display.secondsPerLogo is invalid');
+        if (typeof display.blendWhiteBackgrounds !== 'boolean') errors.push('customers.display.blendWhiteBackgrounds is invalid');
+      }
+    }
   }
 
   if (isObject(value.najd)) {

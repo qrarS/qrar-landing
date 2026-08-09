@@ -64,6 +64,25 @@ describe('landing content contract', () => {
     expect(result.errors).toContain('customers.items[1].logoUrl is invalid');
   });
 
+  it('treats display settings as optional but rejects out-of-range values', () => {
+    const content = structuredClone(DEFAULT_LANDING_CONTENT);
+    delete (content.customers as { display?: unknown }).display;
+    expect(validateLandingContent(content)).toEqual({ valid: true, errors: [] });
+
+    content.customers.display = {
+      logoHeight: 8,
+      gap: 500,
+      secondsPerLogo: 0.1,
+      blendWhiteBackgrounds: 'yes' as unknown as boolean,
+    };
+    const result = validateLandingContent(content);
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('customers.display.logoHeight is invalid');
+    expect(result.errors).toContain('customers.display.gap is invalid');
+    expect(result.errors).toContain('customers.display.secondsPerLogo is invalid');
+    expect(result.errors).toContain('customers.display.blendWhiteBackgrounds is invalid');
+  });
+
   it('caps the customer strip at 12 entries', () => {
     const content = structuredClone(DEFAULT_LANDING_CONTENT);
     content.customers.items = Array.from({ length: 13 }, (_, index) => customer({ id: `customer-${index}` }));
