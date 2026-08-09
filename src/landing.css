@@ -798,6 +798,11 @@
   }
 
   .design-customers-viewport {
+    /* The marquee math is physical: the track must anchor to the LEFT edge so
+       the translateX(-50%) <-> 0 loop states are visually identical. Under the
+       page's RTL direction the track anchors right instead, which opens the
+       loop with a blank strip — so the logo row is always laid out LTR. */
+    direction: ltr;
     margin-top: 26px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
