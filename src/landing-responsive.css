@@ -46,8 +46,12 @@
   .design-stat small { font-size: 22px; }
   .design-stat strong { font-size: 44px; }
 
-  .design-customers-strip { gap: 28px; }
-  .design-customers-strip img { height: 38px; }
+  .design-customers-seq {
+    gap: 28px;
+    padding-inline-end: 28px;
+  }
+
+  .design-customers-seq img { height: 38px; }
 
   .design-intro h2,
   .design-features .design-intro h2 {
@@ -331,12 +335,14 @@
 
   .design-customers { padding: 24px 0 4px; }
 
-  .design-customers-strip {
-    gap: 20px 28px;
-    margin-top: 20px;
+  .design-customers-viewport { margin-top: 20px; }
+
+  .design-customers-seq {
+    gap: 28px;
+    padding-inline-end: 28px;
   }
 
-  .design-customers-strip img {
+  .design-customers-seq img {
     height: 30px;
     max-width: 130px;
   }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -145,20 +145,41 @@ function Customers() {
 
   if (items.length === 0) return null;
 
+  // The marquee track holds two identical halves and loops over translateX(-50%),
+  // so one half must be wider than any viewport: short customer lists repeat
+  // until a half carries ~14 logos. Only the first occurrence of each customer
+  // is exposed to assistive tech; every repeat is decorative.
+  const copies = Math.max(1, Math.ceil(14 / items.length));
+  const sequence = Array.from({ length: copies }, () => items).flat();
+
+  const renderHalf = (decorative: boolean) => (
+    <div className="design-customers-seq" aria-hidden={decorative || undefined}>
+      {sequence.map((item, index) => {
+        const isOriginal = !decorative && index < items.length;
+        return (
+          <img
+            key={`${item.id}-${index}`}
+            src={item.logoUrl}
+            alt={isOriginal ? pick(item.name) : ''}
+            aria-hidden={isOriginal ? undefined : true}
+            className={isOriginal ? undefined : 'design-customers-dupe'}
+            loading="lazy"
+            decoding="async"
+          />
+        );
+      })}
+    </div>
+  );
+
   return (
     <section id="customers" className="design-section design-customers">
       <div className="site-container">
         {pick(section.title) && <h2 className="design-customers-heading">{pick(section.title)}</h2>}
-        <div className="design-customers-strip">
-          {items.map((item) => (
-            <img
-              key={item.id}
-              src={item.logoUrl}
-              alt={pick(item.name)}
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
+      </div>
+      <div className="design-customers-viewport">
+        <div className="design-customers-strip" style={{ '--customers-count': sequence.length } as CSSProperties}>
+          {renderHalf(false)}
+          {renderHalf(true)}
         </div>
       </div>
     </section>
