@@ -816,7 +816,7 @@
   .design-customers-strip {
     display: flex;
     width: max-content;
-    animation: design-customers-marquee calc(var(--customers-count, 14) * var(--customers-pace, 2.5s)) linear infinite;
+    animation: design-customers-marquee calc(var(--customers-count, 14) * var(--customers-pace, 4s)) linear infinite;
   }
 
   .design-customers-strip:hover { animation-play-state: paused; }
@@ -830,9 +830,9 @@
   }
 
   .design-customers-seq img {
-    height: var(--customers-logo-h, 44px);
+    height: var(--customers-logo-h, 56px);
     width: auto;
-    max-width: calc(var(--customers-logo-h, 44px) * 4);
+    max-width: calc(var(--customers-logo-h, 56px) * 4);
     object-fit: contain;
     opacity: 0.85;
   }

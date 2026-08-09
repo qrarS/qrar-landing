@@ -71,9 +71,9 @@ export interface LandingCustomersDisplay {
 }
 
 export const DEFAULT_CUSTOMER_DISPLAY: LandingCustomersDisplay = {
-  logoHeight: 44,
+  logoHeight: 56,
   gap: 44,
-  secondsPerLogo: 2.5,
+  secondsPerLogo: 4,
   blendWhiteBackgrounds: true,
 };
 
