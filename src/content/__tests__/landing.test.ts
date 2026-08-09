@@ -55,6 +55,7 @@ describe('landing content contract', () => {
     content.customers.items = [
       customer({ id: 'Bad Id!' }),
       customer({ logoUrl: `https://example.com/${'x'.repeat(3000)}` }),
+      customer({ id: 'tiny-logo', logoHeight: 8 }),
     ];
 
     const result = validateLandingContent(content);
@@ -62,6 +63,10 @@ describe('landing content contract', () => {
     expect(result.valid).toBe(false);
     expect(result.errors).toContain('customers.items[0].id is invalid');
     expect(result.errors).toContain('customers.items[1].logoUrl is invalid');
+    expect(result.errors).toContain('customers.items[2].logoHeight is invalid');
+
+    content.customers.items = [customer({ logoHeight: 72 })];
+    expect(validateLandingContent(content)).toEqual({ valid: true, errors: [] });
   });
 
   it('treats display settings as optional but rejects out-of-range values', () => {

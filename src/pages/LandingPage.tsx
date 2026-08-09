@@ -163,6 +163,7 @@ function Customers() {
             alt={isOriginal ? pick(item.name) : ''}
             aria-hidden={isOriginal ? undefined : true}
             className={isOriginal ? undefined : 'design-customers-dupe'}
+            style={item.logoHeight ? { '--customers-item-h': `${item.logoHeight}px` } as CSSProperties : undefined}
             loading="lazy"
             decoding="async"
           />

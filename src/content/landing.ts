@@ -59,6 +59,8 @@ export interface LandingCustomer {
   id: string;
   name: LocalizedText;
   logoUrl: string;
+  // Per-logo height override in px; absent = the strip-wide display.logoHeight.
+  logoHeight?: number;
 }
 
 // Optional per-section presentation knobs for the customers marquee. Absent on
@@ -812,6 +814,7 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
         if (typeof item.id !== 'string' || !/^[a-z0-9-]{1,64}$/.test(item.id)) errors.push(`customers.items[${index}].id is invalid`);
         localized(item.name, `customers.items[${index}].name`);
         if (typeof item.logoUrl !== 'string' || item.logoUrl.length > 2048) errors.push(`customers.items[${index}].logoUrl is invalid`);
+        if (item.logoHeight !== undefined && (!Number.isFinite(item.logoHeight) || Number(item.logoHeight) < 16 || Number(item.logoHeight) > 160)) errors.push(`customers.items[${index}].logoHeight is invalid`);
       }
     });
     const display = value.customers.display;

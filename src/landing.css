@@ -829,10 +829,11 @@
     padding-inline-end: var(--customers-gap, 44px);
   }
 
+  /* --customers-item-h is a per-logo CMS override set inline on the img. */
   .design-customers-seq img {
-    height: var(--customers-logo-h, 56px);
+    height: var(--customers-item-h, var(--customers-logo-h, 56px));
     width: auto;
-    max-width: calc(var(--customers-logo-h, 56px) * 4);
+    max-width: calc(var(--customers-item-h, var(--customers-logo-h, 56px)) * 4);
     object-fit: contain;
     opacity: 0.85;
   }
