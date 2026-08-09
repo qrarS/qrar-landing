@@ -4,7 +4,7 @@
 // the browser admin bundle. Published documents are immutable snapshots of this
 // contract; bump LANDING_SCHEMA_VERSION when making a breaking change.
 
-export const LANDING_SCHEMA_VERSION = 2 as const;
+export const LANDING_SCHEMA_VERSION = 3 as const;
 
 export interface LocalizedText {
   en: string;
@@ -53,6 +53,12 @@ export interface LandingCard {
   icon: string;
   title: LocalizedText;
   body: LocalizedText;
+}
+
+export interface LandingCustomer {
+  id: string;
+  name: LocalizedText;
+  logoUrl: string;
 }
 
 export interface LandingAboutContent {
@@ -104,6 +110,9 @@ export interface LandingPageContent {
     primaryCta: LandingLink;
     secondaryCta: LandingLink;
     stats: LandingStat[];
+  };
+  customers: LandingSectionBase & {
+    items: LandingCustomer[];
   };
   workflow: LandingSectionBase & {
     steps: LandingCard[];
@@ -408,6 +417,13 @@ export const DEFAULT_LANDING_CONTENT: LandingPageContent = {
       { metric: 'comparedLocations', label: bi('Locations compared', 'فروع تمت مقارنتها') },
     ],
   },
+  customers: {
+    enabled: false, order: 15,
+    eyebrow: bi('', ''),
+    title: bi('Trusted by leading businesses', 'موثوق من قِبل منشآت رائدة'),
+    body: bi('', ''),
+    items: [],
+  },
   workflow: {
     enabled: true, order: 20,
     eyebrow: bi('From review to action', 'من التقييم إلى الإجراء'),
@@ -576,25 +592,33 @@ export function upgradeLandingContent(value: unknown): LandingPageContent | null
     normalizeLegacyArabicCopy(value);
     return validateLandingContent(value).valid ? value as unknown as LandingPageContent : null;
   }
-  if (value.schemaVersion !== 1) return null;
+  if (value.schemaVersion !== 1 && value.schemaVersion !== 2) return null;
 
   try {
     const upgraded = cloneJson(value) as Record<string, unknown>;
-    upgraded.schemaVersion = LANDING_SCHEMA_VERSION;
-    upgraded.about = cloneJson(DEFAULT_LANDING_CONTENT.about);
-    normalizeLegacyArabicCopy(upgraded);
 
-    if (isObject(upgraded.hero)) {
-      upgraded.hero.stats = cloneJson(DEFAULT_LANDING_CONTENT.hero.stats);
+    if (upgraded.schemaVersion === 1) {
+      upgraded.about = cloneJson(DEFAULT_LANDING_CONTENT.about);
+      if (isObject(upgraded.hero)) {
+        upgraded.hero.stats = cloneJson(DEFAULT_LANDING_CONTENT.hero.stats);
+      }
+      if (isObject(upgraded.navigation) && Array.isArray(upgraded.navigation.links)) {
+        upgraded.navigation.links.forEach(activateAboutLink);
+      }
+      if (isObject(upgraded.footer) && Array.isArray(upgraded.footer.columns)) {
+        upgraded.footer.columns.forEach((column) => {
+          if (isObject(column) && Array.isArray(column.links)) column.links.forEach(activateAboutLink);
+        });
+      }
     }
-    if (isObject(upgraded.navigation) && Array.isArray(upgraded.navigation.links)) {
-      upgraded.navigation.links.forEach(activateAboutLink);
+
+    // v2 -> v3: the customers strip section did not exist before v3.
+    upgraded.schemaVersion = LANDING_SCHEMA_VERSION;
+    if (!isObject(upgraded.customers)) {
+      upgraded.customers = cloneJson(DEFAULT_LANDING_CONTENT.customers);
     }
-    if (isObject(upgraded.footer) && Array.isArray(upgraded.footer.columns)) {
-      upgraded.footer.columns.forEach((column) => {
-        if (isObject(column) && Array.isArray(column.links)) column.links.forEach(activateAboutLink);
-      });
-    }
+    renameLegacyStatLabels(upgraded);
+    normalizeLegacyArabicCopy(upgraded);
 
     return validateLandingContent(upgraded).valid
       ? upgraded as unknown as LandingPageContent
@@ -668,7 +692,7 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
     localized(value.navigation.signUpLabel, 'navigation.signUpLabel');
   }
 
-  for (const key of ['hero', 'workflow', 'features', 'audience', 'pricing', 'testimonials', 'najd', 'finalCta'] as const) {
+  for (const key of ['hero', 'customers', 'workflow', 'features', 'audience', 'pricing', 'testimonials', 'najd', 'finalCta'] as const) {
     section(value[key], key);
   }
 
@@ -757,6 +781,19 @@ export function validateLandingContent(value: unknown): LandingValidationResult 
         localized(item.quote, `testimonials.items[${index}].quote`);
         localized(item.name, `testimonials.items[${index}].name`);
         localized(item.role, `testimonials.items[${index}].role`);
+      }
+    });
+  }
+
+  if (isObject(value.customers)) {
+    const items = value.customers.items;
+    if (!Array.isArray(items) || items.length > 12) errors.push('customers.items must contain at most 12 items');
+    else items.forEach((item, index) => {
+      if (!isObject(item)) errors.push(`customers.items[${index}] is invalid`);
+      else {
+        if (typeof item.id !== 'string' || !/^[a-z0-9-]{1,64}$/.test(item.id)) errors.push(`customers.items[${index}].id is invalid`);
+        localized(item.name, `customers.items[${index}].name`);
+        if (typeof item.logoUrl !== 'string' || item.logoUrl.length > 2048) errors.push(`customers.items[${index}].logoUrl is invalid`);
       }
     });
   }

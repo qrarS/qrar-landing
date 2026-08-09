@@ -784,6 +784,36 @@
     line-height: 1.25;
   }
 
+  /* Customers strip: deliberately compact next to the 90px full sections —
+     it reads as a hero coda, not a standalone chapter. */
+  .design-customers { padding: 34px 0 10px; }
+
+  .design-customers-heading {
+    max-width: 720px;
+    margin: 0 auto;
+    color: rgb(37 19 61 / 55%);
+    font-size: clamp(15px, 1.05vw, 18px);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .design-customers-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(28px, 4vw, 60px);
+    margin-top: 26px;
+  }
+
+  .design-customers-strip img {
+    height: clamp(34px, 3.2vw, 52px);
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+
   .design-workflow { padding: 90px 0 96px; }
 
   .design-workflow .design-intro h2 { max-width: 760px; }

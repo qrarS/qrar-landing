@@ -46,6 +46,9 @@
   .design-stat small { font-size: 22px; }
   .design-stat strong { font-size: 44px; }
 
+  .design-customers-strip { gap: 28px; }
+  .design-customers-strip img { height: 38px; }
+
   .design-intro h2,
   .design-features .design-intro h2 {
     max-width: 720px;
@@ -324,6 +327,18 @@
 @media (max-width: 680px) {
   .design-hero {
     padding-bottom: 56px;
+  }
+
+  .design-customers { padding: 24px 0 4px; }
+
+  .design-customers-strip {
+    gap: 20px 28px;
+    margin-top: 20px;
+  }
+
+  .design-customers-strip img {
+    height: 30px;
+    max-width: 130px;
   }
 
   .response-story-steps {

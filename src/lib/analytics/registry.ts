@@ -61,7 +61,7 @@ export const REGISTRY = {
     trigger: 'IntersectionObserver on landing-page sections (threshold 0.4, ~300ms dwell), once per section per page load.',
     question: 'Which sections visitors actually see before converting or leaving.',
     params: {
-      section_id: { kind: 'enum', values: ['top', 'how_it_works', 'response_story', 'features', 'audience', 'pricing', 'use_cases', 'najd', 'start'], doc: 'Section DOM id, hyphens as underscores.', ga: 'dimension' },
+      section_id: { kind: 'enum', values: ['top', 'customers', 'how_it_works', 'response_story', 'features', 'audience', 'pricing', 'use_cases', 'najd', 'start'], doc: 'Section DOM id, hyphens as underscores.', ga: 'dimension' },
     },
   },
   language_change: {

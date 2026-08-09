@@ -137,6 +137,34 @@ function Hero() {
   );
 }
 
+function Customers() {
+  const { landing } = usePublishedLanding();
+  const { pick } = useSiteLanguage();
+  const section = landing.content.customers;
+  const items = section.items.filter((item) => item.logoUrl.trim() !== '');
+
+  if (items.length === 0) return null;
+
+  return (
+    <section id="customers" className="design-section design-customers">
+      <div className="site-container">
+        {pick(section.title) && <h2 className="design-customers-heading">{pick(section.title)}</h2>}
+        <div className="design-customers-strip">
+          {items.map((item) => (
+            <img
+              key={item.id}
+              src={item.logoUrl}
+              alt={pick(item.name)}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Workflow() {
   const { landing } = usePublishedLanding();
   const { pick } = useSiteLanguage();
@@ -471,6 +499,7 @@ function FinalCall() {
 // the section_view enum in src/lib/analytics/registry.ts).
 const ANALYTICS_SECTION_IDS: Record<string, string> = {
   hero: 'top',
+  customers: 'customers',
   workflow: 'how_it_works',
   responseStory: 'response_story',
   features: 'features',
@@ -531,6 +560,15 @@ export default function LandingPage() {
 
   const sections = useMemo<Array<{ key: string; enabled: boolean; order: number; node: ReactNode }>>(() => [
     { key: 'hero', enabled: landing.content.hero.enabled, order: landing.content.hero.order, node: <Hero /> },
+    {
+      key: 'customers',
+      // An enabled strip with no renderable logos should not mount at all —
+      // otherwise its analytics wrapper stays observable as an empty element.
+      enabled: landing.content.customers.enabled
+        && landing.content.customers.items.some((item) => item.logoUrl.trim() !== ''),
+      order: landing.content.customers.order,
+      node: <Customers />,
+    },
     { key: 'workflow', enabled: landing.content.workflow.enabled, order: landing.content.workflow.order, node: <Workflow /> },
     { key: 'responseStory', enabled: true, order: 25, node: <ResponseStorySection /> },
     { key: 'features', enabled: landing.content.features.enabled, order: landing.content.features.order, node: <Features /> },
